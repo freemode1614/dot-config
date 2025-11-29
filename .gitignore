@@ -53,3 +53,6 @@ zed/prompts
 
 # iterm2 的一些文件
 iterm2/AppSupport
+
+# Podman
+containers/podman/machine
