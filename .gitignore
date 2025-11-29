@@ -1,0 +1,55 @@
+# 忽略临时文件和缓存
+*.tmp
+*.temp
+*.cache
+*.swp
+*.swo
+*~
+
+# 忽略日志文件
+*.log
+logs/
+
+# 忽略编辑器配置和临时文件
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store  # macOS 系统文件
+Thumbs.db  # Windows 系统文件
+
+# 忽略敏感配置（如包含密码、密钥的文件）
+*credentials*
+*secret*
+*token*
+*.env
+*.env.local
+*.env.*.local
+
+# 忽略编译或生成的配置文件
+*.bak
+*.old
+*.orig
+dist/
+build/
+out/
+
+# 忽略特定应用的配置（根据你的使用场景添加）
+# 例如：Git 配置（若不需要追踪）
+# .gitconfig
+# 例如：SSH 配置（若不需要追踪）
+# ssh/
+# 例如：终端配置（如 zsh）
+# zsh/history
+# zsh/*.zwc
+
+# 保留需要追踪的基础配置文件（可选，若有需要提交的默认配置）
+# !default.config
+# !example.config
+
+# 忽略 zed 编辑器中的一些数据
+zed/embeddings
+zed/prompts
+
+# iterm2 的一些文件
+iterm2/AppSupport
