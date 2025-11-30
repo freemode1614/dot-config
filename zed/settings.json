@@ -7,7 +7,40 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-	"tabs": {
+	"agent": {
+  "default_model": {
+   "provider": "LM-Studio",
+   "model": "qwen/qwen3-4b-2507"
+  },
+  "model_parameters": []
+ },
+ "language_models": {
+  "openai_compatible": {
+   "LM-Studio": {
+    "api_url": "http://192.168.31.91:1234/v1",
+    "available_models": [
+     {
+      "name": "qwen/qwen3-4b-2507",
+      "max_tokens": 200000,
+      "max_output_tokens": 32000,
+      "max_completion_tokens": 200000,
+      "capabilities": {
+       "tools": true,
+       "images": false,
+       "parallel_tool_calls": false,
+       "prompt_cache_key": false
+      }
+     }
+    ]
+   }
+  }
+ },
+ "telemetry": {
+  "diagnostics": false,
+  "metrics": false
+ },
+ "restore_on_startup": "none",
+ "tabs": {
 		"file_icons": true
 	},
 	"title_bar": {
@@ -19,13 +52,19 @@
 		}
 	},
 	"inlay_hints": {
-		"show_type_hints": false,
+		"show_parameter_hints": false,
+  "show_value_hints": true,
+  "show_type_hints": false,
 		"show_background": true,
 		"enabled": true
 	},
 	"vim_mode": true,
 	"redact_private_values": true,
-	"icon_theme": "Catppuccin Mocha",
+	"icon_theme": {
+  "mode": "system",
+  "light": "Material Icon Theme",
+  "dark": "Catppuccin Frappé"
+ },
 	"features": {
 		"edit_prediction_provider": "none"
 	},
@@ -41,9 +80,39 @@
 	// export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897
 	// "proxy": "http://127.0.0.1:7897",
 	"languages": {
-		"JavaScript": { "formatter": { "language_server": { "name": "biome" } } },
-		"TypeScript": { "formatter": { "language_server": { "name": "biome" } } },
-		"TSX": { "formatter": { "language_server": { "name": "biome" } } },
+		"JavaScript": {
+		  "formatter": {
+				 "language_server": {
+					  "name": "biome"
+				}
+			},
+			"code_actions_on_format": {
+			  "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+			}
+		},
+		"TypeScript": {
+		  "formatter": {
+				"language_server": {
+				  "name": "biome"
+				}
+			},
+			"code_actions_on_format": {
+		    "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+			}
+		},
+		"TSX": {
+		  "formatter": {
+				"language_server": {
+			    "name": "biome"
+				}
+			},
+			"code_actions_on_format": {
+		    "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+			}
+		},
 		"JSON": { "formatter": { "language_server": { "name": "biome" } } },
 		"JSONC": { "formatter": { "language_server": { "name": "biome" } } },
 		"CSS": { "formatter": { "language_server": { "name": "biome" } } }
