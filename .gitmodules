@@ -1,0 +1,6 @@
+[submodule "nvim"]
+	path = nvim
+	url = https://github.com/freemode1614/nvim.git
+[submodule "wezterm"]
+	path = wezterm
+	url = https://github.com/freemode1614/dot-wezterm.git
