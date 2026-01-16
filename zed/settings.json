@@ -7,7 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-	"agent": {
+	"session": {
+  "trust_all_worktrees": true
+ },
+ "base_keymap": "VSCode",
+ "agent": {
   "default_model": {
    "provider": "LM-Studio",
    "model": "qwen/qwen3-4b-2507"
@@ -36,7 +40,7 @@
   }
  },
  "telemetry": {
-  "diagnostics": false,
+  "diagnostics": true,
   "metrics": false
  },
  "restore_on_startup": "none",
@@ -62,14 +66,14 @@
 	"redact_private_values": true,
 	"icon_theme": {
   "mode": "system",
-  "light": "Material Icon Theme",
-  "dark": "Catppuccin Frappé"
+  "light": "Zed (Default)",
+  "dark": "Zed (Default)"
  },
 	"features": {
 		"edit_prediction_provider": "none"
 	},
 	"ui_font_size": 16,
-	"buffer_font_size": 16.0,
+	"buffer_font_size": 14.0,
 	// The name of a font to use for rendering text in the editor
 	"buffer_font_family": "Maple Mono NF CN",
 	"theme": {
