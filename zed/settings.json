@@ -7,15 +7,46 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-	"agent": {
+	"ssh_connections": [
+  {
+   "host": "73",
+   "args": [],
+   "projects": [
+    {
+     "paths": [
+      "/home/wp"
+     ]
+    }
+   ]
+  }
+ ],
+ "agent": {
+  "default_profile": "ask",
   "default_model": {
-   "provider": "LM-Studio",
-   "model": "qwen/qwen3-4b-2507"
+   "provider": "MiniMax-M2.1",
+   "model": "MiniMax-M2.1"
   },
   "model_parameters": []
  },
  "language_models": {
   "openai_compatible": {
+   "MiniMax-M2.1": {
+    "api_url": "http://172.31.2.45/v1",
+    "available_models": [
+     {
+      "name": "MiniMax-M2.1",
+      "max_tokens": 64000,
+      "max_output_tokens": 32000,
+      "max_completion_tokens": 200000,
+      "capabilities": {
+       "tools": true,
+       "images": false,
+       "parallel_tool_calls": false,
+       "prompt_cache_key": false
+      }
+     }
+    ]
+   },
    "LM-Studio": {
     "api_url": "http://192.168.31.91:1234/v1",
     "available_models": [
