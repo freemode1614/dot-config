@@ -43,7 +43,7 @@
   "diagnostics": true,
   "metrics": false
  },
- "restore_on_startup": "none",
+ "restore_on_startup": "launchpad",
  "tabs": {
 		"file_icons": true
 	},
@@ -78,8 +78,8 @@
 	"buffer_font_family": "Maple Mono NF CN",
 	"theme": {
 		"mode": "system",
-		"light": "Fleet Light",
-		"dark": "Fleet Dark"
+		"light": "Ayu Light",
+		"dark": "Ayu Dark"
 	},
 	// export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897
 	// "proxy": "http://127.0.0.1:7897",
