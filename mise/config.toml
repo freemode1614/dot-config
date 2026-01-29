@@ -1,7 +1,4 @@
 [tools]
 node = "22"
 pnpm = "10"
-<<<<<<< HEAD
 yarn = "4.4.1"
-=======
->>>>>>> 385a2bf3a673aac7f9fae542cc93f12c481ab4c8
