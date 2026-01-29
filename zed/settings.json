@@ -21,7 +21,7 @@
   }
  ],
  "agent": {
-  "default_profile": "ask",
+  "default_profile": "write",
   "default_model": {
    "provider": "MiniMax-M2.1",
    "model": "MiniMax-M2.1"
