@@ -4,6 +4,7 @@ package brew
 package gi
 package z
 theme bobthefish
+theme cyan
 theme default
 theme mish
 theme pure

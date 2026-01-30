@@ -56,3 +56,12 @@ iterm2/AppSupport
 
 # Podman
 containers/podman/machine
+
+# oh-my-fish
+omf/
+
+# github cli
+gh/
+
+# mole
+mole/
