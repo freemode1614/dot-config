@@ -5,3 +5,7 @@ package gi
 package z
 theme bobthefish
 theme default
+theme mish
+theme pure
+theme solarfish
+theme technopagan
