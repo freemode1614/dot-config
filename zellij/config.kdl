@@ -3,6 +3,14 @@
 //
 
 keybinds clear-defaults=true {
+    unbind "Ctrl s"
+    unbind "Crtl v"
+    unbind "Ctrl o"
+    unbind "Ctrl u"
+    unbind "Ctrl h"
+    unbind "Ctrl j"
+    unbind "Ctrl k"
+    unbind "Ctrl l"
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
     }
