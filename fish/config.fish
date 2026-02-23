@@ -17,3 +17,5 @@ alias z="zellij"
 alias p="pnpm"
 alias n="nvim"
 alias lg="lazygit"
+
+export AVANTE_OPENAI_API_KEY="sk-Qh6c_Geim64HXPj6azdllmgjURHgchwhM-JJD6VPp5c"
