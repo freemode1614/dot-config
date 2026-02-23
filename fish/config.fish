@@ -13,6 +13,7 @@ end
 set -gx PATH /home/linuxbrew/.linuxbrew/bin $PATH
 set -gx PATH /home/linuxbrew/.linuxbrew/sbin $PATH
 
-alias "z=zellij"
-alias "p=pnpm"
-alias "n=nvim"
+alias z="zellij"
+alias p="pnpm"
+alias n="nvim"
+alias lg="lazygit"
