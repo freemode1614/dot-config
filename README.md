@@ -22,7 +22,6 @@
 | `uv/` | [uv](https://github.com/astral-sh/uv) | Python 包管理器 |
 | `pip/` | pip | Python 包管理器配置 |
 | `containers/` | Podman | 容器工具配置 |
-| `avante.nvim/` | [Avante.nvim](https://github.com/yetone/avante.nvim) | Neovim AI 助手 |
 | `opencode/` | Opencode | AI 编码助手 |
 
 ## 📦 快速开始
@@ -30,13 +29,13 @@
 ### 克隆
 
 ```bash
-git clone --recursive https://github.com/freemode1614/dotfiles.git ~/.config
+git clone --recursive https://github.com/freemode1614/dot-config.git ~/.config
 ```
 
 或分开克隆子模块：
 
 ```bash
-git clone https://github.com/freemode1614/dotfiles.git ~/.config
+git clone https://github.com/freemode1614/dot-config.git ~/.config
 cd ~/.config
 git submodule update --init --recursive
 ```
