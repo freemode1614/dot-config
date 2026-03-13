@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
+  "edit_predictions": {
+    "provider": "none"
+  },
   "ssh_connections": [
     {
       "host": "73",
@@ -94,9 +97,6 @@
     "light": "Zed (Default)",
     "dark": "Zed (Default)",
   },
-  "features": {
-    "edit_prediction_provider": "none",
-  },
   "ui_font_size": 16,
   "buffer_font_size": 14.0,
   // The name of a font to use for rendering text in the editor
@@ -146,11 +146,5 @@
     "JSONC": { "formatter": { "language_server": { "name": "biome" } } },
     "CSS": { "formatter": { "language_server": { "name": "biome" } } },
   },
-  "lsp": {
-    "biome": {
-      "settings": {
-        "require_config_file": true,
-      },
-    },
-  },
+  "lsp": {},
 }
