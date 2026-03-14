@@ -36,18 +36,18 @@ background-opacity = 0.85
 background-blur-radius = 20
 
 # 窗口内边距（让内容不贴边）
-window-padding-x = 12
+window-padding-x = 8
 window-padding-y = 8
 
 # --------------------------------------------
 # 4. 光标设置
 # --------------------------------------------
 # 光标样式: block, bar, underline
-cursor-style = block_hollow
+cursor-style = block
 # 光标闪烁
 cursor-style-blink = true
 # 光标颜色（可选，默认自动对比）
-# cursor-color = #ff0000
+cursor-color = #ff0000
 
 # --------------------------------------------
 # 5. 窗口与界面设置
@@ -58,7 +58,7 @@ window-decoration = auto
 
 # macOS 标题栏样式
 # native: 原生 | transparent: 透明 | tabs: 集成标签页 | hidden: 隐藏
-macos-titlebar-style = transparent
+macos-titlebar-style = hidden
 
 # 窗口主题跟随系统
 window-theme = system
