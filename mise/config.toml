@@ -1,4 +1,4 @@
 [tools]
 node = "latest"
 pnpm = "latest"
-yarn = "4.4.1"
+yarn = "4"
