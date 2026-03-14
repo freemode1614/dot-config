@@ -102,9 +102,9 @@
   // The name of a font to use for rendering text in the editor
   "buffer_font_family": "Maple Mono NF CN",
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Ayu Dark",
+    "dark": "Catppuccin Mocha",
   },
   // export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897
   // "proxy": "http://127.0.0.1:7897",
