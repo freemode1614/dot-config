@@ -68,3 +68,9 @@ mole/
 
 # fish
 fish/fish_variables
+
+# zsh
+zsh/.zsh_sessions
+zsh/.zcompdump-*
+zsh/.zsh_history
+

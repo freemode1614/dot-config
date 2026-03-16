@@ -7,14 +7,6 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-  "agent_servers": {
-    "opencode": {
-      "type": "registry"
-    },
-    "kimi": {
-      "type": "registry"
-    }
-  },
   "edit_predictions": {
     "provider": "none"
   },
@@ -99,7 +91,7 @@
     "enabled": true,
   },
   "vim_mode": true,
-  "redact_private_values": true,
+  "redact_private_values": false,
   "icon_theme": {
     "mode": "system",
     "light": "Zed (Default)",
@@ -110,9 +102,9 @@
   // The name of a font to use for rendering text in the editor
   "buffer_font_family": "Maple Mono NF CN",
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Ayu Dark",
+    "dark": "Catppuccin Mocha",
   },
   // export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897
   // "proxy": "http://127.0.0.1:7897",
@@ -154,11 +146,5 @@
     "JSONC": { "formatter": { "language_server": { "name": "biome" } } },
     "CSS": { "formatter": { "language_server": { "name": "biome" } } },
   },
-  "lsp": {
-    "biome": {
-      "settings": {
-        "require_config_file": true,
-      },
-    },
-  },
+  "lsp": {},
 }
