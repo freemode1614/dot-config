@@ -1,1 +1,1 @@
-{"Connection":{},"Farm":{}}
+{"Connection":{"Default":"wenpeng-machine","Connections":{"wenpeng-machine":{"URI":"ssh://core@127.0.0.1:57221/run/user/501/podman/podman.sock","Identity":"/Users/wenpeng.lei/.local/share/containers/podman/machine/machine","IsMachine":true},"wenpeng-machine-root":{"URI":"ssh://root@127.0.0.1:57221/run/podman/podman.sock","Identity":"/Users/wenpeng.lei/.local/share/containers/podman/machine/machine","IsMachine":true}}},"Farm":{}}

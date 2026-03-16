@@ -91,7 +91,7 @@
     "enabled": true,
   },
   "vim_mode": true,
-  "redact_private_values": true,
+  "redact_private_values": false,
   "icon_theme": {
     "mode": "system",
     "light": "Zed (Default)",

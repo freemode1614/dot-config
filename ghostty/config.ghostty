@@ -10,7 +10,7 @@ font-family = Maple Mono NF CN
 # 备用字体（可选）
 font-family = "JetBrainsMono Nerd Font"
 # 字体大小
-font-size = 18
+font-size = 12
 # 启用字体连字（ligatures）
 font-feature = +liga
 
@@ -47,7 +47,7 @@ cursor-style = block
 # 光标闪烁
 cursor-style-blink = true
 # 光标颜色（可选，默认自动对比）
-cursor-color = #ff0000
+cursor-color = #06940f
 
 # --------------------------------------------
 # 5. 窗口与界面设置
@@ -58,7 +58,7 @@ window-decoration = auto
 
 # macOS 标题栏样式
 # native: 原生 | transparent: 透明 | tabs: 集成标签页 | hidden: 隐藏
-macos-titlebar-style = hidden
+macos-titlebar-style = transparent
 
 # 窗口主题跟随系统
 window-theme = system

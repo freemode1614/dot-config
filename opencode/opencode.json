@@ -12,8 +12,32 @@
           "name": "minimax-m2.1"
         }
       }
+    },
+    "aida": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "aida-vibe-coding",
+      "options": {
+        "baseURL": "http://172.31.2.45/v1"
+      },
+      "models": {
+        "qwen3.5-plus": {
+          "name": "qwen3.5-plus"
+        },
+        "kimi-k2.5": {
+          "name": "kimi-k2.5"
+        },
+        "glm-5": {
+          "name": "glm-5"
+        },
+        "MiniMax-M2.5-Cloud": {
+          "name": "MiniMax-M2.5-Cloud"
+        }
+      }
     }
   },
-  "model": "vllm/MiniMax-M2.1",
-  "small_model": "vllm/MiniMax-M2.1"
- }
+  "model": "aida/qwen3.5-plus",
+  "small_model": "aida/qwen3.5-plus",
+  "plugin": [
+    "oh-my-opencode"
+  ]
+}
