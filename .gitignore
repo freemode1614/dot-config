@@ -1,78 +1,150 @@
-# 忽略临时文件和缓存
+# ============================================
+# 通用忽略规则
+# ============================================
+
+# 临时文件和缓存
 *.tmp
 *.temp
 *.cache
 *.swp
 *.swo
 *~
+*.bak
+*.old
+*.orig
 
-# 忽略日志文件
+# 日志文件
 *.log
 logs/
 
-# 忽略编辑器配置和临时文件
+# 编辑器配置和临时文件
 .idea/
 .vscode/
 *.sublime-project
 *.sublime-workspace
-.DS_Store  # macOS 系统文件
-Thumbs.db  # Windows 系统文件
 
-# 忽略敏感配置（如包含密码、密钥的文件）
-*credentials*
-*secret*
-*token*
-*.env
-*.env.local
-*.env.*.local
+# 操作系统文件
+.DS_Store
+Thumbs.db
 
-# 忽略编译或生成的配置文件
-*.bak
-*.old
-*.orig
+# 编译输出
 dist/
 build/
 out/
 
-# 忽略特定应用的配置（根据你的使用场景添加）
-# 例如：Git 配置（若不需要追踪）
-# .gitconfig
-# 例如：SSH 配置（若不需要追踪）
-# ssh/
-# 例如：终端配置（如 zsh）
-# zsh/history
-# zsh/*.zwc
+# ============================================
+# 敏感配置（跨设备不共享）
+# ============================================
 
-# 保留需要追踪的基础配置文件（可选，若有需要提交的默认配置）
-# !default.config
-# !example.config
+# 环境变量文件
+*.env
+*.env.local
+*.env.*.local
 
-# 忽略 zed 编辑器中的一些数据
-zed/embeddings
-zed/prompts
+# 认证信息（包含密码、密钥、token）
+*credentials*
+*secret*
+*token*
 
-# iterm2 的一些文件
-iterm2/AppSupport
+# ============================================
+# Zed 编辑器
+# ============================================
 
-# Podman
-containers/podman/machine
+# 本地数据（包含个人 SSH、AI 配置）
+zed/settings.json
+zed/settings_backup.json
+zed/embeddings/
+zed/prompts/
+zed/themes/
 
-# oh-my-fish
-omf/
+# 保留示例配置（需手动创建）
+!zed/settings.json.example
+!zed/keymap.json
 
-# github cli
-gh/
+# ============================================
+# GitHub CLI
+# ============================================
 
-# mole
-mole/
+# 主机认证信息（包含个人账号）
+gh/hosts.yml
 
-# fish
-fish/fish_variables
+# ============================================
+# Opencode AI 助手
+# ============================================
 
-# zsh
-zsh/.zsh_sessions
-zsh/.zcompdump-*
+# 主配置（包含 API 地址和密钥）
+opencode/opencode.json
+
+# 依赖目录
+opencode/node_modules/
+opencode/bun.lock
+
+# ============================================
+# 容器工具 (Podman/Docker)
+# ============================================
+
+# 认证信息
+containers/auth.json
+
+# 设备特定文件
+containers/podman/
+containers/podman-connections.json.lock
+
+# ============================================
+# Zsh Shell
+# ============================================
+
+# 历史记录（设备特定）
 zsh/.zsh_history
 
-# containers
-containers/podman-*
+# 会话文件
+zsh/.zsh_sessions/
+
+# 自动补全缓存（自动生成）
+zsh/.zcompdump-*
+zsh/*.zwc
+
+# Powerlevel10k 配置（可通过 p10k configure 生成）
+zsh/.p10k.zsh
+
+# ============================================
+# Mole（SSH 隧道工具）
+# ============================================
+
+mole/*.log
+
+# ============================================
+# UV Python 包管理器
+# ============================================
+
+# 安装收据（包含设备特定路径）
+uv/uv-receipt.json
+
+# ============================================
+# iTerm2（如使用）
+# ============================================
+
+iterm2/AppSupport/
+
+# ============================================
+# 保留规则（示例配置）
+# ============================================
+
+# 示例配置文件
+!*.example
+!*.example.*
+!*/config.example.*
+!*/config.template.*
+
+# ============================================
+# Ghostty（已移除共享）
+# ============================================
+
+# Ghostty 配置已从仓库移除，仅在本地保留
+ghostty/
+
+# ============================================
+# WezTerm（子模块）
+# ============================================
+
+# WezTerm 是子模块，示例配置在 README 中说明
