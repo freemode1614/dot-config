@@ -108,5 +108,6 @@ source $ZSH/oh-my-zsh.sh
 alias zj="zellij"
 alias lg="lazygit"
 alias v="nvim"
+alias p="pnpm"
 
 . "$HOME/.local/bin/env"
