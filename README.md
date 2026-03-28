@@ -70,6 +70,31 @@ git submodule update --init --recursive
 git submodule update --remote --merge
 ```
 
+## 🎯 终端使用流程
+
+### 本地开发
+
+```bash
+# 1. 打开 WezTerm
+# 2. 启动 Zellij（如未自动启动）
+zellij attach main --create
+
+# 3. 在 Zellij 内使用 Alt+hjkl 导航 Pane
+# 4. 使用 Alt+1-9 切换 Tab
+# 5. 需要 lazygit？按 Ctrl+b g（WezTerm 会在新窗口打开）
+# 6. 切换项目？按 Ctrl+b f（WezTerm 工作区切换）
+```
+
+### SSH 远程开发
+
+```bash
+# SSH 后 Zellij 快捷键完全一致
+ssh server
+zellij attach dev --create
+
+# 所有快捷键与本地相同，无需重新适应
+```
+
 ## 📝 配置说明
 
 ### Zed 编辑器 (`zed/`)
@@ -79,12 +104,59 @@ git submodule update --remote --merge
 
 **注意**：`settings.json` 中包含了个人 SSH 连接配置和本地 AI 服务地址，使用前请根据你的环境修改。
 
-### WezTerm (`wezterm/`)
+### WezTerm + Zellij（终端架构）
 
-- `wezterm.lua` - 主配置文件
-- `lua/` - 主题和外观配置
+本配置采用**分层架构**：
 
-**注意**：状态栏显示了用户名，可根据需要修改 `wezterm.lua` 中的状态栏文本。
+| 层级 | 工具 | 职责 |
+|------|------|------|
+| **窗口层** | WezTerm | 工作区管理、字体/外观、快速启动 |
+| **会话层** | Zellij | Pane/Tab 管理、会话恢复、滚动/搜索 |
+
+这种设计避免了"双层分屏"的混乱，且 SSH 远程后快捷键保持一致。
+
+#### WezTerm（`wezterm/`）- 窗口管理
+
+**Leader Key**: `Ctrl+b`
+
+| 快捷键 | 功能 |
+|--------|------|
+| `Ctrl+b f` | 切换工作区 |
+| `Ctrl+b F` | 新建工作区 |
+| `Ctrl+b [/]` | 上/下一个工作区 |
+| `Ctrl+b g` | 启动 lazygit（新窗口） |
+| `Ctrl+b t` | 启动 btop（新窗口） |
+| `Ctrl+b z` | 启动 Zellij（main 会话） |
+| `Ctrl+b Z` | 启动 Zellij（dev 会话） |
+| `Ctrl+b [` | 复制模式 |
+| `Cmd +/-` | 调整字体大小 |
+
+#### Zellij（`zellij/`）- 会话管理
+
+**Normal 模式快捷键**（直接可用）：
+
+| 快捷键 | 功能 |
+|--------|------|
+| `Alt h/j/k/l` | 快速导航 |
+| `Alt n` | 新建 Pane |
+| `Alt t` | 新建 Tab |
+| `Alt x` | 关闭 Pane |
+| `Alt f` | 浮动 Pane |
+| `Alt 1-9` | 切换 Tab |
+| `Alt [/]` | 上/下一个 Tab |
+
+**模式切换**（按后进入对应模式）：
+
+| 快捷键 | 模式 | 说明 |
+|--------|------|------|
+| `Ctrl+p` | Pane | Pane 管理（分屏、导航） |
+| `Ctrl+t` | Tab | Tab 管理（新建、切换、重命名） |
+| `Ctrl+s` | Scroll | 滚动/搜索（vim 风格按键） |
+| `Ctrl+o` | Session | 会话管理（detach、切换） |
+| `Ctrl+n` | Resize | 调整 Pane 大小 |
+| `Ctrl+m` | Move | 移动 Pane |
+
+**Tmux 兼容模式**：按 `Ctrl+b` 进入（与 WezTerm Leader 一致）
 
 ### Zsh (`zsh/`)
 
