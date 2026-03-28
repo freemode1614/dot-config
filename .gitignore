@@ -74,3 +74,5 @@ zsh/.zsh_sessions
 zsh/.zcompdump-*
 zsh/.zsh_history
 
+# containers
+containers/podman-*
