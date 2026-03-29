@@ -154,17 +154,22 @@ install_zsh() {
             "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
     fi
     
-    # 安装 Zsh 插件
-    if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]]; then
+    # 安装第三方 Zsh 插件
+    ZSH_PLUGINS_DIR="$HOME/.local/share/zsh/plugins"
+    mkdir -p "$ZSH_PLUGINS_DIR"
+    
+    # zsh-autosuggestions - 命令自动建议
+    if [[ ! -d "$ZSH_PLUGINS_DIR/zsh-autosuggestions" ]]; then
         log_info "安装 zsh-autosuggestions..."
-        git clone https://github.com/zsh-users/zsh-autosuggestions \
-            "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+        git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions \
+            "$ZSH_PLUGINS_DIR/zsh-autosuggestions"
     fi
     
-    if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ]]; then
-        log_info "安装 zsh-syntax-highlighting..."
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-            "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+    # fast-syntax-highlighting - 语法高亮（比 zsh-syntax-highlighting 更快）
+    if [[ ! -d "$ZSH_PLUGINS_DIR/fast-syntax-highlighting" ]]; then
+        log_info "安装 fast-syntax-highlighting..."
+        git clone --depth=1 https://github.com/zdharma-continuum/fast-syntax-highlighting \
+            "$ZSH_PLUGINS_DIR/fast-syntax-highlighting"
     fi
     
     # 创建 zsh 配置链接
