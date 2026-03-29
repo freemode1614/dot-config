@@ -1,113 +1,105 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# ============================================
+# Zsh 配置文件
+# ============================================
 
-# Activate mise
-# eval "$(mise activate zsh)"
+# --------------------------------------------
+# 1. 基础环境变量 & PATH 设置（按优先级排序）
+# --------------------------------------------
 
-# Path to your Oh My Zsh installation.
+# Homebrew - 支持 Apple Silicon 和 Intel Mac
+# 必须先初始化，因为后续工具可能依赖 brew 安装的软件
+if [[ -d "/opt/homebrew/bin" ]]; then
+    # Apple Silicon Mac (M1/M2/M3/M4)
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x "/usr/local/bin/brew" ]]; then
+    # Intel Mac
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# 添加 ~/.local/bin 到 PATH（uv, pipx, cargo 等工具安装位置）
+# 这行由 uv 生成，保持独立以便工具自行更新
+. "$HOME/.local/bin/env"
+
+# --------------------------------------------
+# 2. Oh My Zsh 配置
+# --------------------------------------------
+
 export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="frontcube"
+plugins=(
+    # ----------------------------
+    # 基础必备
+    # ----------------------------
+    git                 # Git 别名和自动补全: gst, gco, ggpull 等
+    sudo                # 按 Esc 两次自动添加 sudo
+    history             # h, hs, hsi 快速搜索历史
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+    # ----------------------------
+    # macOS 相关
+    # ----------------------------
+    macos               # macOS 特有功能: pbcopy/pbpaste, man-preview 等
+    brew                # Homebrew 别名: bcubc, bcubo 等
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+    # ----------------------------
+    # 开发工具（根据你安装的工具）
+    # ----------------------------
+    node                # Node.js 别名和补全
+    npm                 # npm 别名: npmG, npmL 等
+    bun                 # Bun 运行时支持
+    python              # Python 别名: py, python2/3
+    pip                 # pip 别名和补全
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+    # ----------------------------
+    # 实用增强
+    # ----------------------------
+    z                   # 目录快速跳转 (z <目录名>)
+    colored-man-pages   # 彩色 man 手册页面
+    command-not-found   # 命令未找到时提示安装方式
+)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# --------------------------------------------
+# 3. 开发工具管理器
+# --------------------------------------------
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# mise - 管理多版本开发工具（Node, Python, Rust 等）
+# https://mise.jdx.dev/
+if command -v mise &>/dev/null; then
+    eval "$(mise activate zsh)"
+fi
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# --------------------------------------------
+# 4. 别名 (Aliases)
+# --------------------------------------------
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+# 终端工具
+alias zj="zellij"           # 终端复用器
+alias lg="lazygit"          # TUI Git 客户端
 
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
+# 编辑器
+alias v="nvim"              # Neovim 简写
+alias vi="nvim"
 
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias zj="zellij"
-alias lg="lazygit"
-alias v="nvim"
-alias p="pnpm"
+# 包管理器
+alias p="pnpm"              # pnpm 简写
 
-. "$HOME/.local/bin/env"
+# --------------------------------------------
+# 5. 第三方 Zsh 插件（由 install.sh 安装）
+# --------------------------------------------
+
+# 自动建议：根据历史记录灰色提示命令，按 → 接受
+source ~/.local/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# 语法高亮：实时命令语法高亮（需在 omz 之后加载）
+source ~/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+
+# --------------------------------------------
+# 6. 其他工具配置（后续按需添加）
+# --------------------------------------------
+
+# 例如：
+# - oh-my-posh 主题
+# - fzf 配置
+# - zoxide 初始化
+# 等等...
