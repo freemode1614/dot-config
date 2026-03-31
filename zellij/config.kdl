@@ -6,6 +6,7 @@ keybinds clear-defaults=true {
     // ============================================
     // 基础按键解绑（WezTerm 已接管）
     // ============================================
+    unbind "Ctrl c"
     unbind "Ctrl s"
     unbind "Ctrl v"
     unbind "Ctrl h"
@@ -25,12 +26,12 @@ keybinds clear-defaults=true {
     // ============================================
     normal {
         // 快速进入各种模式
-        bind "Ctrl p" { SwitchToMode "pane"; }
-        bind "Ctrl t" { SwitchToMode "tab"; }
-        bind "Ctrl s" { SwitchToMode "scroll"; }
-        bind "Ctrl o" { SwitchToMode "session"; }
-        bind "Ctrl n" { SwitchToMode "resize"; }
-        bind "Ctrl m" { SwitchToMode "move"; }
+        bind "Ctrl Shift p" { SwitchToMode "pane"; }
+        bind "Ctrl Shift t" { SwitchToMode "tab"; }
+        bind "Ctrl Shift s" { SwitchToMode "scroll"; }
+        bind "Ctrl Shift o" { SwitchToMode "session"; }
+        bind "Ctrl Shift n" { SwitchToMode "resize"; }
+        bind "Ctrl Shift m" { SwitchToMode "move"; }
         
         // 快速操作（无需进入模式）
         bind "Alt h" { MoveFocusOrTab "left"; }
@@ -67,7 +68,7 @@ keybinds clear-defaults=true {
     // Pane 模式（Ctrl+p 进入）
     // ============================================
     pane {
-        bind "Ctrl p" { SwitchToMode "normal"; }
+        bind "Ctrl Shift p" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         
         // 导航（vim 风格）
@@ -101,7 +102,7 @@ keybinds clear-defaults=true {
     // Tab 模式（Ctrl+t 进入）
     // ============================================
     tab {
-        bind "Ctrl t" { SwitchToMode "normal"; }
+        bind "Ctrl Shift t" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         
         // 导航
@@ -149,7 +150,7 @@ keybinds clear-defaults=true {
     // Resize 模式（Ctrl+n 进入）
     // ============================================
     resize {
-        bind "Ctrl n" { SwitchToMode "normal"; }
+        bind "Ctrl Shift n" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         bind "Enter" { SwitchToMode "normal"; }
         
@@ -170,7 +171,7 @@ keybinds clear-defaults=true {
     // Move 模式（Ctrl+m 进入）
     // ============================================
     move {
-        bind "Ctrl m" { SwitchToMode "normal"; }
+        bind "Ctrl Shift m" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         
         bind "h" "left" { MovePane "left"; }
@@ -186,7 +187,7 @@ keybinds clear-defaults=true {
     // Scroll 模式（Ctrl+s 进入）
     // ============================================
     scroll {
-        bind "Ctrl s" { SwitchToMode "normal"; }
+        bind "Ctrl Shift s" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         bind "q" { SwitchToMode "normal"; }
         
@@ -199,8 +200,6 @@ keybinds clear-defaults=true {
         bind "u" "Ctrl u" { HalfPageScrollUp; }
         bind "g" { ScrollToTop; }
         bind "G" { ScrollToBottom; }
-        bind "Ctrl c" { ScrollToBottom; SwitchToMode "normal"; }
-        
         // 搜索
         bind "/" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "?" { SwitchToMode "entersearch"; SearchInput 0; }
@@ -220,7 +219,7 @@ keybinds clear-defaults=true {
     // ============================================
     search {
         bind "Esc" { SwitchToMode "scroll"; }
-        bind "Ctrl c" { ScrollToBottom; SwitchToMode "normal"; }
+        // Ctrl c 已解绑，避免劫持系统快捷键
         bind "Enter" { SwitchToMode "scroll"; }
         
         bind "n" { Search "down"; }
@@ -234,7 +233,7 @@ keybinds clear-defaults=true {
     // Session 模式（Ctrl+o 进入）
     // ============================================
     session {
-        bind "Ctrl o" { SwitchToMode "normal"; }
+        bind "Ctrl Shift o" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         bind "q" { SwitchToMode "normal"; }
         
@@ -270,17 +269,17 @@ keybinds clear-defaults=true {
     // ============================================
     renametab {
         bind "Esc" { UndoRenameTab; SwitchToMode "tab"; }
-        bind "Ctrl c" { UndoRenameTab; SwitchToMode "normal"; }
+        // Ctrl c 已解绑，避免劫持系统快捷键
     }
     
     renamepane {
         bind "Esc" { UndoRenamePane; SwitchToMode "pane"; }
-        bind "Ctrl c" { UndoRenamePane; SwitchToMode "normal"; }
+        // Ctrl c 已解绑，避免劫持系统快捷键
     }
     
     entersearch {
         bind "Esc" { SwitchToMode "scroll"; }
-        bind "Ctrl c" { SwitchToMode "scroll"; }
+        // Ctrl c 已解绑，避免劫持系统快捷键
         bind "Enter" { SwitchToMode "search"; }
     }
     
@@ -299,7 +298,7 @@ keybinds clear-defaults=true {
         
         // 新建
         bind "c" { NewTab; SwitchToMode "normal"; }
-        bind '"' { NewPane "down"; SwitchToMode "normal"; }
+        bind "\"" { NewPane "down"; SwitchToMode "normal"; }
         bind "%" { NewPane "right"; SwitchToMode "normal"; }
         
         // 切换
@@ -333,9 +332,7 @@ keybinds clear-defaults=true {
         bind "Esc" { SwitchToMode "normal"; }
     }
     
-    shared_except "locked" "normal" "entersearch" {
-        bind "Ctrl c" { SwitchToMode "normal"; }
-    }
+    // Ctrl c 已在全局解绑，避免在所有模式下劫持系统快捷键
     
     shared_except "locked" {
         bind "Ctrl q" { Quit; }
