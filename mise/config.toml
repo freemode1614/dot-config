@@ -1,7 +1,7 @@
 [tools]
 bun = "latest"
-node = "latest"
-pnpm = "latest"
+node = "24"
+pnpm = "10"
 yarn = "4"
 
 [settings]
