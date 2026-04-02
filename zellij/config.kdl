@@ -394,7 +394,7 @@ copy_clipboard "system"
 copy_on_select true
 
 // 主题
-theme "default"
+theme "molokai"
 
 // 滚动缓冲区大小
 scroll_buffer_size 100000
