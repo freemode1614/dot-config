@@ -154,15 +154,22 @@ keybinds clear-defaults=true {
         bind "Esc" { SwitchToMode "normal"; }
         bind "Enter" { SwitchToMode "normal"; }
 
-        // 调整大小（方向键：按哪个方向就朝哪个方向扩展）
+        // 方向键：按哪个方向就往哪个方向扩展
         bind "left" { Resize "increase left"; }
+        bind "right" { Resize "increase right"; }
+        bind "up" { Resize "increase up"; }
         bind "down" { Resize "increase down"; }
-        bind "up" { Resize "decrease up"; }
-        bind "right" { Resize "decrease right"; }
-        bind "H" { Resize "decrease left"; }
-        bind "J" { Resize "decrease down"; }
+
+        // hjkl：小写收缩，大写扩展
+        bind "h" { Resize "decrease left"; }
+        bind "j" { Resize "decrease down"; }
+        bind "k" { Resize "decrease up"; }
+        bind "l" { Resize "decrease right"; }
+        bind "H" { Resize "increase left"; }
+        bind "J" { Resize "increase down"; }
         bind "K" { Resize "increase up"; }
         bind "L" { Resize "increase right"; }
+
         bind "-" { Resize "decrease"; }
         bind "=" "+" { Resize "increase"; }
     }
