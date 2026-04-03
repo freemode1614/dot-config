@@ -424,6 +424,7 @@ install_extra_tools() {
             jq \
             yq \
             stow \
+            yazi \
             2>/dev/null || true
     else
         # Linux 额外工具
@@ -513,6 +514,7 @@ main() {
     echo "  - uv（Python 包管理器）"
     echo "  - Podman（容器引擎）"
     echo "  - Opencode（AI 助手）"
+    echo "  - Yazi（终端文件管理器）"
     echo "  - 其他开发工具（fzf, ripgrep, bat, eza 等）"
     echo ""
     
@@ -566,7 +568,10 @@ main() {
     echo "5. 启动 Zellij："
     echo "   zellij attach main --create"
     echo ""
-    echo "6. 启动 WezTerm 并体验完整工作流"
+    echo "6. 使用 Yazi 文件管理器："
+    echo "   ya"
+    echo ""
+    echo "7. 启动 WezTerm 并体验完整工作流"
     echo ""
     echo "══════════════════════════════════════════════════════════════"
     echo ""

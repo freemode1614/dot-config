@@ -76,6 +76,18 @@ fi
 # 终端工具
 alias zj="zellij"           # 终端复用器
 alias lg="lazygit"          # TUI Git 客户端
+alias ya="yazi"             # Yazi 文件管理器
+
+# Yazi 文件管理器 - 退出后自动切换到当前目录
+# 使用方法: yy (进入 yazi，退出后自动 cd 到当前目录)
+function yy() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
 
 # 编辑器
 alias v="nvim"              # Neovim 简写

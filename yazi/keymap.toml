@@ -1,0 +1,177 @@
+# =============================================================================
+# Yazi 快捷键配置
+# 参考: https://yazi-rs.github.io/docs/configuration/keymap
+# =============================================================================
+
+[[manager.prepend_keymap]]
+# 显示/隐藏隐藏文件
+on   = [ "." ]
+run  = "toggle_hidden"
+desc = "Toggle hidden files"
+
+[[manager.prepend_keymap]]
+# 使用 nvim 编辑文件
+on   = [ "e" ]
+run  = "open --interactive"
+desc = "Open file with interactive"
+
+[[manager.prepend_keymap]]
+# 快速预览
+on   = [ "<Space>" ]
+run  = "toggle"
+desc = "Toggle selection"
+
+[[manager.prepend_keymap]]
+# 全选
+on   = [ "<C-a>" ]
+run  = "select_all --state=true"
+desc = "Select all files"
+
+[[manager.prepend_keymap]]
+# 取消全选
+on   = [ "<C-d>" ]
+run  = "select_all --state=false"
+desc = "Deselect all files"
+
+[[manager.prepend_keymap]]
+# 复制路径到剪贴板
+on   = [ "y", "p" ]
+run  = "shell 'echo "$1" | pbcopy' --confirm"
+desc = "Copy file path to clipboard"
+
+[[manager.prepend_keymap]]
+# 复制文件名到剪贴板
+on   = [ "y", "n" ]
+run  = "shell 'echo "${1##*/}" | pbcopy' --confirm"
+desc = "Copy file name to clipboard"
+
+[[manager.prepend_keymap]]
+# 在新标签页中打开
+on   = [ "t" ]
+run  = "tab_create --current"
+desc = "Create a new tab with CWD"
+
+[[manager.prepend_keymap]]
+# 关闭当前标签页
+on   = [ "T" ]
+run  = "tab_close"
+desc = "Close current tab"
+
+[[manager.prepend_keymap]]
+# 跳转到上一个标签页
+on   = [ "<A-,>" ]
+run  = "tab_switch -1 --relative"
+desc = "Switch to previous tab"
+
+[[manager.prepend_keymap]]
+# 跳转到下一个标签页
+on   = [ "<A-.>" ]
+run  = "tab_switch 1 --relative"
+desc = "Switch to next tab"
+
+[[manager.prepend_keymap]]
+# 快速跳转到常用目录 - Home
+on   = [ "g", "h" ]
+run  = "cd ~"
+desc = "Go to home"
+
+[[manager.prepend_keymap]]
+# 快速跳转到常用目录 - Config
+on   = [ "g", "c" ]
+run  = "cd ~/.config"
+desc = "Go to config"
+
+[[manager.prepend_keymap]]
+# 快速跳转到常用目录 - Downloads
+on   = [ "g", "d" ]
+run  = "cd ~/Downloads"
+desc = "Go to downloads"
+
+[[manager.prepend_keymap]]
+# 快速跳转到常用目录 - Projects
+on   = [ "g", "p" ]
+run  = "cd ~/Projects"
+desc = "Go to projects"
+
+[[manager.prepend_keymap]]
+# 快速跳转到常用目录 - Desktop
+on   = [ "g", "D" ]
+run  = "cd ~/Desktop"
+desc = "Go to desktop"
+
+[[manager.prepend_keymap]]
+# 按名称排序
+on   = [ ",", "n" ]
+run  = "sort_by_name --reverse=no"
+desc = "Sort by name"
+
+[[manager.prepend_keymap]]
+# 按名称排序（逆序）
+on   = [ ",", "N" ]
+run  = "sort_by_name --reverse"
+desc = "Sort by name (reverse)"
+
+[[manager.prepend_keymap]]
+# 按修改时间排序
+on   = [ ",", "m" ]
+run  = "sort_by_modified --reverse=no"
+desc = "Sort by modified"
+
+[[manager.prepend_keymap]]
+# 按修改时间排序（逆序）
+on   = [ ",", "M" ]
+run  = "sort_by_modified --reverse"
+desc = "Sort by modified (reverse)"
+
+[[manager.prepend_keymap]]
+# 按大小排序
+on   = [ ",", "s" ]
+run  = "sort_by_size --reverse=no"
+desc = "Sort by size"
+
+[[manager.prepend_keymap]]
+# 按大小排序（逆序）
+on   = [ ",", "S" ]
+run  = "sort_by_size --reverse"
+desc = "Sort by size (reverse)"
+
+[[manager.prepend_keymap]]
+# 打开终端
+on   = [ ";" ]
+run  = 'shell "$SHELL" --block --confirm'
+desc = "Open shell here"
+
+[[manager.prepend_keymap]]
+# 使用 fzf 跳转
+on   = [ "f", "f" ]
+run  = 'shell "fd --type f | fzf --preview 'bat --color=always {}' | xargs -r nvim" --block --confirm'
+desc = "Find and open file with fzf"
+
+[[manager.prepend_keymap]]
+# 快速预览文件内容
+on   = [ "i" ]
+run  = "peek"
+desc = "Peek file"
+
+[[manager.prepend_keymap]]
+# 显示文件详情
+on   = [ "d" ]
+run  = "arrow 0"
+desc = "Show file details"
+
+# 保留默认的一些常用快捷键
+# j/k - 上下移动
+# h/l - 进入/退出目录
+# Enter - 打开文件
+# q - 退出
+# / - 搜索
+# ? - 帮助
+# y - 复制
+# x - 剪切
+# p - 粘贴
+# r - 重命名
+# d - 删除
+# c - 创建文件
+# C - 创建目录
+# z - 使用 fzf 跳转
+# ~ - 跳转到 home
