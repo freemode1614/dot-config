@@ -2,6 +2,10 @@
 # Zsh 配置文件
 # ============================================
 
+# 使用中科大镜像（推荐，速度快）
+export HOMEBREW_API_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles/api"
+export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+
 # --------------------------------------------
 # 1. 基础环境变量 & PATH 设置（按优先级排序）
 # --------------------------------------------
@@ -18,7 +22,7 @@ fi
 
 # 添加 ~/.local/bin 到 PATH（uv, pipx, cargo 等工具安装位置）
 # 这行由 uv 生成，保持独立以便工具自行更新
-. "$HOME/.local/bin/env"
+[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
 # --------------------------------------------
 # 2. Oh My Zsh 配置
@@ -43,11 +47,11 @@ plugins=(
     # ----------------------------
     # 开发工具（根据你安装的工具）
     # ----------------------------
-    node                # Node.js 别名和补全
-    npm                 # npm 别名: npmG, npmL 等
-    bun                 # Bun 运行时支持
-    python              # Python 别名: py, python2/3
-    pip                 # pip 别名和补全
+    # node                # Node.js 别名和补全
+    # npm                 # npm 别名: npmG, npmL 等
+    # bun                 # Bun 运行时支持
+    # python              # Python 别名: py, python2/3
+    # pip                 # pip 别名和补全
 
     # ----------------------------
     # 实用增强
@@ -66,7 +70,7 @@ source $ZSH/oh-my-zsh.sh
 # mise - 管理多版本开发工具（Node, Python, Rust 等）
 # https://mise.jdx.dev/
 if command -v mise &>/dev/null; then
-    eval "$(mise activate zsh)"
+    eval "$(mise activate zsh --shims)"
 fi
 
 # --------------------------------------------
