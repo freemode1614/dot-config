@@ -100,9 +100,8 @@ alias vi="nvim"
 # 包管理器
 alias p="pnpm"              # pnpm 简写
 
-# OpenCode 配置切换（家用/公司）
-alias ocwork='cd ~/.config/opencode && ln -sf opencode.json.work opencode.json && ln -sf oh-my-opencode.json.work oh-my-opencode.json && echo "OpenCode: 切换到公司配置"'
-alias ochome='cd ~/.config/opencode && ln -sf opencode.json.home opencode.json && ln -sf oh-my-opencode.json.home oh-my-opencode.json && echo "OpenCode: 切换到家用配置"'
+# OpenCode
+alias oc="opencode"
 
 # --------------------------------------------
 # 5. 第三方 Zsh 插件（由 install.sh 安装）
