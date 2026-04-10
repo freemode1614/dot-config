@@ -7,7 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
+  "disable_ai": false,
   "edit_predictions": {
+    "open_ai_compatible_api": {
+      "prompt_format": "infer"
+    },
     "provider": "none"
   },
   "ssh_connections": [
@@ -22,6 +26,7 @@
     },
   ],
   "agent": {
+    "play_sound_when_agent_done": true,
     "default_profile": "write",
     "default_model": {
       "provider": "MiniMax-M2.1",
