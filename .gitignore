@@ -56,6 +56,9 @@ zed/settings_backup.json
 zed/embeddings/
 zed/prompts/
 zed/themes/
+zed/embeddings/
+zed/prompts/
+zed/themes/
 
 # 保留示例配置（需手动创建）
 !zed/settings.json.example
