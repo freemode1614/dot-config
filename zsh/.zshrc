@@ -2,6 +2,10 @@
 # Zsh 配置文件
 # ============================================
 
+# 使用中科大镜像（推荐，速度快）
+export HOMEBREW_API_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles/api"
+export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+
 # --------------------------------------------
 # 1. 基础环境变量 & PATH 设置（按优先级排序）
 # --------------------------------------------
@@ -22,7 +26,7 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 
 # 添加 ~/.local/bin 到 PATH（uv, pipx, cargo 等工具安装位置）
 # 这行由 uv 生成，保持独立以便工具自行更新
-. "$HOME/.local/bin/env"
+[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
 # LM Studio CLI
 export PATH="$PATH:$HOME/.lmstudio/bin"
@@ -95,6 +99,7 @@ if command -v mise &>/dev/null; then
   mise_activate() {
     eval "$(mise activate zsh)"
   }
+
 fi
 
 # --------------------------------------------
@@ -105,6 +110,18 @@ fi
 alias zj="zellij"           # 终端复用器
 alias lg="lazygit"          # TUI Git 客户端
 alias cl="clear"            # 清屏
+alias ya="yazi"             # Yazi 文件管理器
+
+# Yazi 文件管理器 - 退出后自动切换到当前目录
+# 使用方法: yy (进入 yazi，退出后自动 cd 到当前目录)
+function yy() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
 
 # 编辑器
 alias v="nvim"              # Neovim 简写
@@ -177,6 +194,8 @@ alias mkdir="mkdir -pv"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"
+# OpenCode
+alias oc="opencode"
 
 # --------------------------------------------
 # 6. 第三方 Zsh 插件（由 install.sh 安装）

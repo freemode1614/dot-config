@@ -1,0 +1,146 @@
+# =============================================================================
+# Yazi 配置文件
+# 一个用 Rust 编写的快速终端文件管理器
+# 文档: https://yazi-rs.github.io/
+# =============================================================================
+
+[manager]
+# 显示配置
+show_hidden = false      # 默认不显示隐藏文件
+show_symlink = true      # 显示符号链接目标
+sort_by = "modified"     # 默认按修改时间排序
+sort_dir_first = true    # 目录优先
+sort_reverse = false     # 升序排列
+
+[preview]
+# 预览配置
+tab_size = 2
+max_width = 1920
+max_height = 1080
+cache_dir = ""
+
+[opener]
+# 文件打开器配置
+edit = [
+	{ exec = 'nvim "$@"', block = true, for = "unix" },
+	{ exec = 'code "%*"', orphan = true, for = "windows" },
+]
+open = [
+	{ exec = 'open "$@"', desc = "Open", for = "macos" },
+	{ exec = 'xdg-open "$@"', desc = "Open", for = "linux" },
+	{ exec = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
+]
+reveal = [
+	{ exec = 'open -R "$1"', desc = "Reveal", for = "macos" },
+	{ exec = 'explorer /select,"%1"', orphan = true, desc = "Reveal", for = "windows" },
+	{ exec = 'exiftool "$1"; echo "Press enter to exit"; read', block = true, desc = "Show EXIF", for = "unix" },
+]
+
+[open]
+# 打开规则
+rules = [
+	{ name = "*.html", use = "open" },
+	{ name = "*.json", use = "edit" },
+	{ name = "*/", use = [ "open", "reveal" ] },
+	{ use = "open" },
+]
+
+[tasks]
+# 任务配置
+micro_workers = 5
+macro_workers = 10
+bizarre_retry = 5
+image_alloc = 536870912  # 512MB
+image_bound = [ 0, 0 ]
+suppress_preload = false
+
+[plugin]
+# 插件配置
+fetchers = [
+	{ name = "*", run = "mime" },
+]
+preloaders = [
+	{ name = "image/*", run = "image" },
+	# Video
+	{ name = "video/*", run = "video" },
+	# PDF
+	{ name = "application/pdf", run = "pdf" },
+]
+previewers = [
+	{ name = "image/*", run = "image" },
+	{ name = "video/*", run = "video" },
+	{ name = "application/pdf", run = "pdf" },
+]
+
+[input]
+# 输入框配置
+cursor_blink = false
+
+cd_title = "Change directory:"
+cd_origin = "top-center"
+cd_offset = [ 0, 2, 50, 3 ]
+
+# Create
+create_title = [ "Create file:", "Create directory:" ]
+create_origin = "top-center"
+create_offset = [ 0, 2, 50, 3 ]
+
+# Rename
+rename_title = "Rename:"
+rename_origin = "hovered"
+rename_offset = [ 0, 2, 50, 3 ]
+
+# Filter
+filter_title = "Filter:"
+filter_origin = "top-center"
+filter_offset = [ 0, 2, 50, 3 ]
+
+# Find
+find_title = [ "Find next:", "Find previous:" ]
+find_origin = "top-center"
+find_offset = [ 0, 2, 50, 3 ]
+
+# Search
+cd_origin = "top-center"
+search_offset = [ 0, 2, 50, 3 ]
+
+# Shell
+shell_title = [ "Shell:", "Confirm:" ]
+shell_origin = "top-center"
+shell_offset = [ 0, 2, 50, 3 ]
+
+[confirm]
+# 确认框配置
+title  = { text = "Confirm?", side = "center" }
+origin = "center"
+offset = [ 0, 0, 50, 10 ]
+
+[pick]
+# 选择器配置
+title  = { text = "Pick:", side = "left" }
+origin = "hovered"
+offset = [ 0, 0, 50, 20 ]
+
+[completion]
+# 补全配置
+title  = { text = "Completion:", side = "left" }
+origin = "top-center"
+offset = [ 0, 2, 50, 12 ]
+
+[help]
+# 帮助配置
+title  = { text = "Help:", side = "left" }
+origin = "center"
+offset = [ 0, 0, 50, 26 ]
+
+[notify]
+# 通知配置
+title  = { text = "Notify:", side = "left" }
+origin = "top-right"
+offset = [ -2, 2, 40, 0 ]
+
+[headsup]
+# 抬头显示配置
+title  = { text = "Headsup:", side = "left" }
+origin = "top-center"
+offset = [ 0, 2, 50, 3 ]
