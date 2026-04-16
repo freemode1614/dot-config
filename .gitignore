@@ -151,3 +151,6 @@ ghostty/
 # ============================================
 
 # WezTerm 是子模块，示例配置在 README 中说明
+
+# Podman/Docker
+containers
