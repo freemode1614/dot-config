@@ -32,48 +32,31 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export PATH="$PATH:$HOME/.lmstudio/bin"
 
 # --------------------------------------------
-# 2. Oh My Zsh 配置
+# 2. 补全系统初始化
 # --------------------------------------------
+# 需要在加载插件之前初始化，因为许多插件使用 compdef
+autoload -Uz compinit
+# 使用缓存加速 compinit，仅在 .zcompdump 超过 24 小时才重新生成
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
-export ZSH="$HOME/.oh-my-zsh"
+# Oh My Zsh 缓存目录（部分插件依赖此变量）
+export ZSH_CACHE_DIR="$HOME/.cache/oh-my-zsh"
+[[ -d "$ZSH_CACHE_DIR/completions" ]] || mkdir -p "$ZSH_CACHE_DIR/completions"
 
-# 主题使用 oh-my-posh，所以这里设置为空白
-ZSH_THEME=""
+# --------------------------------------------
+# 3. Sheldon 插件管理器
+# --------------------------------------------
+# Sheldon 替代 Oh My Zsh 的插件管理功能
+# 配置文件: ~/.config/sheldon/plugins.toml
+# https://github.com/rossmacarthur/sheldon
 
-plugins=(
-    # ----------------------------
-    # 基础必备
-    # ----------------------------
-    git                 # Git 别名和自动补全: gst, gco, ggpull 等
-    sudo                # 按 Esc 两次自动添加 sudo
-    history             # h, hs, hsi 快速搜索历史
-
-    # ----------------------------
-    # macOS 相关
-    # ----------------------------
-    macos               # macOS 特有功能: pbcopy/pbpaste, man-preview 等
-    brew                # Homebrew 别名: bcubc, bcubo 等
-
-    # ----------------------------
-    # 开发工具（已移除 npm, yarn, pip 以避免启动变慢）
-    # ----------------------------
-    node                # Node.js 别名和补全（轻量级）
-    bun                 # Bun 运行时支持（后台生成补全）
-    deno                # Deno 运行时支持（后台生成补全）
-    python              # Python 别名: py, python2/3（轻量级）
-    # npm/yarn/pip 插件已移除 - 它们会在启动时执行外部命令导致变慢
-    # 相关别名已手动添加在下方的 Aliases 部分
-
-    # ----------------------------
-    # 实用增强
-    # ----------------------------
-    z                   # 目录快速跳转 (z <目录名>)
-    colored-man-pages   # 彩色 man 手册页面
-    command-not-found   # 命令未找到时提示安装方式
-    fast-syntax-highlighting  # 语法高亮
-)
-
-source $ZSH/oh-my-zsh.sh
+if command -v sheldon &>/dev/null; then
+    eval "$(sheldon source)"
+fi
 
 # --------------------------------------------
 # 3. Oh My Posh 主题配置
@@ -198,39 +181,9 @@ alias rm="rm -iv"
 alias oc="opencode"
 
 # --------------------------------------------
-# 6. 第三方 Zsh 插件（由 install.sh 安装）
+# 6. 第三方 Zsh 插件
 # --------------------------------------------
-
-# 延迟加载 zsh-autosuggestions（节省约 1 秒启动时间）
-# 在第一次提示符显示后加载
-zsh_autosuggestions_load() {
-  local autosuggest_file=""
-  if [ -f "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-    autosuggest_file="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  elif [ -f "$(brew --prefix 2>/dev/null)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-    autosuggest_file="$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  elif [ -f "$HOME/.local/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-    autosuggest_file="$HOME/.local/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  fi
-
-  if [ -n "$autosuggest_file" ]; then
-    source "$autosuggest_file"
-  fi
-}
-
-# 在第一次提示符显示后加载 autosuggestions
-autoload -Uz add-zsh-hook
-load_autosuggestions_after_prompt() {
-  add-zsh-hook -d precmd load_autosuggestions_after_prompt
-  zsh_autosuggestions_load
-}
-add-zsh-hook precmd load_autosuggestions_after_prompt
-
-# 如果 brew 安装了 fast-syntax-highlighting 且 oh-my-zsh 没加载，则手动加载
-if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting" ]; then
-  [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  [ -f "$HOME/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ] && source "$HOME/.local/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-fi
+# 已由 Sheldon 管理，配置见 ~/.config/sheldon/plugins.toml
 
 # --------------------------------------------
 # 7. 历史记录配置
