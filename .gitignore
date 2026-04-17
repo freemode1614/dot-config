@@ -105,6 +105,7 @@ zsh/.zsh_sessions/
 
 # 自动补全缓存（自动生成）
 zsh/.zcompdump-*
+zsh/.zcompdump
 zsh/*.zwc
 
 # Powerlevel10k 配置（可通过 p10k configure 生成）
