@@ -59,13 +59,6 @@ if command -v sheldon &>/dev/null; then
 fi
 
 # --------------------------------------------
-# 3. Oh My Posh 主题配置
-# --------------------------------------------
-if command -v oh-my-posh &>/dev/null; then
-  eval "$(oh-my-posh init zsh --config ~/.poshthemes/robbyrussell.omp.json)"
-fi
-
-# --------------------------------------------
 # 4. 开发工具管理器
 # --------------------------------------------
 
@@ -111,82 +104,17 @@ alias v="nvim"              # Neovim 简写
 alias vi="nvim"
 alias vim="nvim"
 
-# 包管理器
-alias p="pnpm"              # pnpm 简写
-
-# npm 别名（替代 npm 插件）
-alias npmg="npm i -g"
-alias npmS="npm i -S"
-alias npmD="npm i -D"
-alias npmF="npm i -f"
-alias npmE='PATH="$(npm bin):$PATH"'
-alias npmO="npm outdated"
-alias npmU="npm update"
-alias npmV="npm -v"
-alias npmL="npm list"
-alias npmL0="npm ls --depth=0"
-
-# yarn 别名（替代 yarn 插件）
-alias y="yarn"
-alias ya="yarn add"
-alias yad="yarn add --dev"
-alias yap="yarn add --peer"
-alias yb="yarn build"
-alias ycc="yarn cache clean"
-alias yd="yarn dev"
-alias yf="yarn format"
-alias yh="yarn help"
-alias yi="yarn init"
-alias yin="yarn install"
-alias yln="yarn lint"
-alias ylnf="yarn lint --fix"
-alias yp="yarn pack"
-alias yrm="yarn remove"
-alias yrun="yarn run"
-alias ys="yarn serve"
-alias yst="yarn start"
-alias yt="yarn test"
-alias ytc="yarn test --coverage"
-alias yui="yarn upgrade-interactive"
-alias yup="yarn upgrade"
-alias yv="yarn version"
-alias yw="yarn workspace"
-alias yws="yarn workspaces"
-alias yy="yarn why"
-
-# pip 别名（替代 pip 插件）
-alias pipi="pip install"
-alias pipu="pip uninstall"
-alias pipl="pip list"
-alias pipo="pip outdated"
-alias pipf="pip freeze"
-alias pipr="pip install -r requirements.txt"
-
-# ls 相关
-alias ll="ls -lh"
-alias la="ls -la"
-alias lla="ls -la"
-
-# 目录导航
-alias ..="cd .."
-alias ...="cd ../.."
-alias ~="cd ~"
-
 # 安全操作
 alias mkdir="mkdir -pv"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"
+
 # OpenCode
 alias oc="opencode"
 
 # --------------------------------------------
-# 6. 第三方 Zsh 插件
-# --------------------------------------------
-# 已由 Sheldon 管理，配置见 ~/.config/sheldon/plugins.toml
-
-# --------------------------------------------
-# 7. 历史记录配置
+# 6. 历史记录配置
 # --------------------------------------------
 HISTSIZE=10000
 SAVEHIST=10000
@@ -196,7 +124,7 @@ setopt HIST_IGNORE_SPACE
 setopt SHARE_HISTORY
 
 # --------------------------------------------
-# 8. 其他选项
+# 7. 其他选项
 # --------------------------------------------
 setopt AUTO_CD
 setopt EXTENDED_GLOB
@@ -208,17 +136,11 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # --------------------------------------------
-# 9. 其他工具配置
+# 8. 其他工具配置
 # --------------------------------------------
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# 例如：
-# - oh-my-posh 主题
-# - fzf 配置
-# - zoxide 初始化
-# 等等...
 
 # opencode
 export PATH=/Users/tzhu/.opencode/bin:$PATH
