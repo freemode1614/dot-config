@@ -213,3 +213,12 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# 例如：
+# - oh-my-posh 主题
+# - fzf 配置
+# - zoxide 初始化
+# 等等...
+
+# opencode
+export PATH=/Users/tzhu/.opencode/bin:$PATH
