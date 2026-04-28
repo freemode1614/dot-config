@@ -1,0 +1,41 @@
+# Starship 配置文件
+# https://starship.rs/config/
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+ahead = "⇡${count}"
+behind = "⇣${count}"
+modified = "!"
+untracked = "?"
+deleted = "✘"
+
+[python]
+symbol = " "
+detect_files = ["python", "pyproject.toml", "requirements.txt", "setup.py"]
+
+[nodejs]
+symbol = " "
+detect_files = ["package.json", ".nvmrc"]
+
+[rust]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[aws]
+symbol = " "
+
+[time]
+disabled = true
