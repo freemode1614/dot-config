@@ -47,15 +47,11 @@ fi
 export ZSH_CACHE_DIR="$HOME/.cache/oh-my-zsh"
 [[ -d "$ZSH_CACHE_DIR/completions" ]] || mkdir -p "$ZSH_CACHE_DIR/completions"
 
-# --------------------------------------------
-# 3. Sheldon 插件管理器
-# --------------------------------------------
-# Sheldon 替代 Oh My Zsh 的插件管理功能
-# 配置文件: ~/.config/sheldon/plugins.toml
-# https://github.com/rossmacarthur/sheldon
-
-if command -v sheldon &>/dev/null; then
-    eval "$(sheldon source)"
+# ============================================
+# Starship 提示符
+# ============================================
+if command -v starship &>/dev/null; then
+  eval "$(starship init zsh)"
 fi
 
 # --------------------------------------------
