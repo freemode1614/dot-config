@@ -1,19 +1,29 @@
-# Starship 配置文件
+# Starship 配置文件 - Tokyo Night
 # https://starship.rs/config/
+
+format = """
+[┌─────────────────────────────────────────────────────>](bold purple)
+[│](bold purple)$directory$git_branch$git_status
+[└─>](bold purple)$nodejs$python$rust$docker$aws$time$cmd_duration$line_break$character"""
 
 [character]
 success_symbol = "[❯](bold green)"
 error_symbol = "[❯](bold red)"
 
 [directory]
+style = "bold blue"
 truncation_length = 3
 truncate_to_repo = true
+format = "[$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
 symbol = " "
-style = "bold purple"
+style = "bold magenta"
+format = "on [$symbol$branch]($style) "
 
 [git_status]
+style = "bold yellow"
+format = "[$all_status$ahead_behind]($style) "
 ahead = "⇡${count}"
 behind = "⇣${count}"
 modified = "!"
@@ -21,21 +31,36 @@ untracked = "?"
 deleted = "✘"
 
 [python]
-symbol = " "
+symbol = "  "
+style = "bold yellow"
 detect_files = ["python", "pyproject.toml", "requirements.txt", "setup.py"]
 
 [nodejs]
-symbol = " "
+symbol = "  "
+style = "bold green"
 detect_files = ["package.json", ".nvmrc"]
 
 [rust]
-symbol = " "
+symbol = "  "
+style = "bold red"
 
 [docker_context]
-symbol = " "
+symbol = "  "
+style = "bold cyan"
 
 [aws]
-symbol = " "
+symbol = "  "
+style = "bold yellow"
 
 [time]
 disabled = true
+
+[cmd_duration]
+min_time = 2000
+format = "took [$duration]($style) "
+
+[commands]
+command_timeout = 10000
+
+[line_break]
+disabled = false
