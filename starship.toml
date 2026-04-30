@@ -1,6 +1,8 @@
 # Starship 配置文件 - Tokyo Night
 # https://starship.rs/config/
 
+command_timeout = 10000
+
 format = """
 [┌─────────────────────────────────────────────────────>](bold purple)
 [│](bold purple)$directory$git_branch$git_status
@@ -58,8 +60,6 @@ disabled = true
 [cmd_duration]
 min_time = 2000
 format = "took [$duration]($style) "
-
-command_timeout = 10000
 
 [line_break]
 disabled = false
