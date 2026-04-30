@@ -59,7 +59,6 @@ disabled = true
 min_time = 2000
 format = "took [$duration]($style) "
 
-[commands]
 command_timeout = 10000
 
 [line_break]
