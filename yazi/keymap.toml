@@ -36,13 +36,13 @@ desc = "Deselect all files"
 [[manager.prepend_keymap]]
 # 复制路径到剪贴板
 on   = [ "y", "p" ]
-run  = "shell 'echo "$1" | pbcopy' --confirm"
+run  = 'shell "echo \"$1\" | pbcopy" --confirm'
 desc = "Copy file path to clipboard"
 
 [[manager.prepend_keymap]]
 # 复制文件名到剪贴板
 on   = [ "y", "n" ]
-run  = "shell 'echo "${1##*/}" | pbcopy' --confirm"
+run  = 'shell "echo \"${1##*/}\" | pbcopy" --confirm'
 desc = "Copy file name to clipboard"
 
 [[manager.prepend_keymap]]
@@ -144,7 +144,7 @@ desc = "Open shell here"
 [[manager.prepend_keymap]]
 # 使用 fzf 跳转
 on   = [ "f", "f" ]
-run  = 'shell "fd --type f | fzf --preview 'bat --color=always {}' | xargs -r nvim" --block --confirm'
+run  = "shell \"fd --type f | fzf --preview 'bat --color=always {}' | xargs -r nvim\" --block --confirm"
 desc = "Find and open file with fzf"
 
 [[manager.prepend_keymap]]
