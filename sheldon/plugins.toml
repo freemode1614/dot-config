@@ -7,138 +7,6 @@ shell = "zsh"
 [plugins]
 
 # ============================================
-# Oh My Zsh 核心库
-# ============================================
-# Oh My Zsh 的 lib 目录包含许多基础功能
-# 一些插件依赖这些库文件
-# 按顺序加载关键文件（避免加载测试目录）
-
-[plugins.ohmyzsh-lib-functions]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["functions.zsh"]
-
-[plugins.ohmyzsh-lib-directories]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["directories.zsh"]
-
-[plugins.ohmyzsh-lib-grep]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["grep.zsh"]
-
-[plugins.ohmyzsh-lib-history]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["history.zsh"]
-
-[plugins.ohmyzsh-lib-key-bindings]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["key-bindings.zsh"]
-
-[plugins.ohmyzsh-lib-compfix]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["compfix.zsh"]
-
-[plugins.ohmyzsh-lib-completion]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["completion.zsh"]
-
-[plugins.ohmyzsh-lib-misc]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["misc.zsh"]
-
-[plugins.ohmyzsh-lib-git]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["git.zsh"]
-
-[plugins.ohmyzsh-lib-theme-and-appearance]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["theme-and-appearance.zsh"]
-
-# ============================================
-# Oh My Zsh 插件
-# ============================================
-# Git 别名和自动补全: gst, gco, ggpull 等
-[plugins.git]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/git"
-use = ["*.plugin.zsh"]
-
-# 按 Esc 两次自动添加 sudo
-[plugins.sudo]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/sudo"
-use = ["*.plugin.zsh"]
-
-# h, hs, hsi 快速搜索历史
-[plugins.history]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/history"
-use = ["*.plugin.zsh"]
-
-# macOS 特有功能: pbcopy/pbpaste, man-preview 等
-[plugins.macos]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/macos"
-use = ["*.plugin.zsh"]
-
-# Homebrew 别名: bcubc, bcubo 等
-[plugins.brew]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/brew"
-use = ["*.plugin.zsh"]
-
-# Node.js 别名和补全（轻量级）
-[plugins.node]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/node"
-use = ["*.plugin.zsh"]
-
-# Bun 运行时支持（后台生成补全）
-[plugins.bun]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/bun"
-use = ["*.plugin.zsh"]
-
-# Deno 运行时支持（后台生成补全）
-[plugins.deno]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/deno"
-use = ["*.plugin.zsh"]
-
-# Python 别名: py, python2/3（轻量级）
-[plugins.python]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/python"
-use = ["*.plugin.zsh"]
-
-# 目录快速跳转 (z <目录名>)
-[plugins.z]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/z"
-use = ["*.plugin.zsh"]
-
-# 彩色 man 手册页面
-[plugins.colored-man-pages]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/colored-man-pages"
-use = ["*.plugin.zsh"]
-
-# 命令未找到时提示安装方式
-[plugins.command-not-found]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/command-not-found"
-use = ["*.plugin.zsh"]
-
-# ============================================
 # 第三方插件
 # ============================================
 
@@ -150,10 +18,12 @@ github = "zdharma-continuum/fast-syntax-highlighting"
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 
-# ============================================
-# 本地自定义配置
-# ============================================
+# fzf  Tab 补全
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
 
-# 如果你有本地自定义的 zsh 配置片段，可以在这里添加
-# [plugins.local-config]
-# local = "~/.config/zsh/custom"
+# 目录跳转 (zoxide)
+[plugins.zoxide]
+github = "zoxide/zoxide"
+
+

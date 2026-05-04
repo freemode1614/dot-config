@@ -20,22 +20,20 @@ max_height = 1080
 cache_dir = ""
 
 [opener]
-# 文件打开器配置
 edit = [
-	{ exec = 'nvim "$@"', block = true, for = "unix" },
-	{ exec = 'code "%*"', orphan = true, for = "windows" },
+	{ run = 'nvim "$@"', block = true, for = "unix" },
+	{ run = 'code "%*"', orphan = true, for = "windows" },
 ]
 open = [
-	{ exec = 'open "$@"', desc = "Open", for = "macos" },
-	{ exec = 'xdg-open "$@"', desc = "Open", for = "linux" },
-	{ exec = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
+	{ run = 'open "$@"', desc = "Open", for = "macos" },
+	{ run = 'xdg-open "$@"', desc = "Open", for = "linux" },
+	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
 ]
 reveal = [
-	{ exec = 'open -R "$1"', desc = "Reveal", for = "macos" },
-	{ exec = 'explorer /select,"%1"', orphan = true, desc = "Reveal", for = "windows" },
-	{ exec = 'exiftool "$1"; echo "Press enter to exit"; read', block = true, desc = "Show EXIF", for = "unix" },
+	{ run = 'open -R "$1"', desc = "Reveal", for = "macos" },
+	{ run = 'explorer /select,"%1"', orphan = true, desc = "Reveal", for = "windows" },
+	{ run = 'exiftool "$1"; echo "Press enter to exit"; read', block = true, desc = "Show EXIF", for = "unix" },
 ]
-
 [open]
 # 打开规则
 rules = [
@@ -55,21 +53,15 @@ image_bound = [ 0, 0 ]
 suppress_preload = false
 
 [plugin]
-# 插件配置
-fetchers = [
-	{ name = "*", run = "mime" },
-]
 preloaders = [
-	{ name = "image/*", run = "image" },
-	# Video
-	{ name = "video/*", run = "video" },
-	# PDF
-	{ name = "application/pdf", run = "pdf" },
+	{ mime = "image/*", run = "image" },
+	{ mime = "video/*", run = "video" },
+	{ mime = "application/pdf", run = "pdf" },
 ]
 previewers = [
-	{ name = "image/*", run = "image" },
-	{ name = "video/*", run = "video" },
-	{ name = "application/pdf", run = "pdf" },
+	{ mime = "image/*", run = "image" },
+	{ mime = "video/*", run = "video" },
+	{ mime = "application/pdf", run = "pdf" },
 ]
 
 [input]
@@ -101,7 +93,8 @@ find_origin = "top-center"
 find_offset = [ 0, 2, 50, 3 ]
 
 # Search
-cd_origin = "top-center"
+search_title = "Search:"
+search_origin = "top-center"
 search_offset = [ 0, 2, 50, 3 ]
 
 # Shell
