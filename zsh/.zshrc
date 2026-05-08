@@ -88,6 +88,7 @@ function yy() {
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
+alias n="nvim"
 
 alias mkdir="mkdir -pv"
 alias cp="cp -iv"
