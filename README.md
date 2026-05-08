@@ -20,7 +20,6 @@
 | `gh/` | [GitHub CLI](https://cli.github.com) | GitHub 命令行工具 |
 | `pip/` | pip | Python 包管理器配置 |
 | `uv/` | [uv](https://github.com/astral-sh/uv) | 极速 Python 包管理器 |
-| `containers/` | [Podman](https://podman.io) | 无守护进程容器引擎 |
 | `opencode/` | [Opencode](https://opencode.ai) | AI 编码助手配置 |
 
 ### 按类别分组
@@ -42,9 +41,6 @@
 **🐍 Python 生态**
 - [uv](https://github.com/astral-sh/uv) - `uv/` - 极速包管理器
 - pip - `pip/` - 传统包管理器配置
-
-**🐳 容器化**
-- [Podman](https://podman.io) - `containers/` - 容器引擎配置
 
 **🤖 AI 工具**
 - [Opencode](https://opencode.ai) - `opencode/` - AI 编码助手
@@ -161,7 +157,6 @@ zellij attach dev --create
 ### Zsh (`zsh/`)
 
 - `.zshrc` - Zsh 主配置
-- `.p10k.zsh` - Powerlevel10k 主题配置
 
 ### Mise (`mise/`)
 
@@ -199,10 +194,8 @@ zellij attach dev --create
 | `gh/hosts.yml` | GitHub 认证信息 | 在新设备上运行 `gh auth login` |
 | `zed/settings.json` | 包含 SSH 和本地 AI 配置 | 编辑后使用，或创建 `settings.json.example` |
 | `opencode/opencode.json` | 包含 API 地址 | 手动创建或复制示例配置 |
-| `containers/auth.json` | 镜像仓库认证 | 在新设备上重新认证 |
 | `zsh/.zsh_history` | Shell 历史记录 | 自动生成 |
 | `zsh/.zcompdump-*` | 自动补全缓存 | 自动生成 |
-| `zsh/.p10k.zsh` | Powerlevel10k 配置 | 运行 `p10k configure` 生成 |
 
 ## 🔧 环境变量注入
 
