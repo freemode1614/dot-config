@@ -40,11 +40,14 @@
     "metrics": false,
   },
   "restore_on_startup": "launchpad",
+  "project_panel": {
+    "dock": "left"
+  },
   "tabs": {
     "file_icons": true,
   },
   "title_bar": {
-    "show_branch_icon": true,
+    "show_branch_status_icon": true
   },
   "diagnostics": {
     "inline": {
@@ -114,5 +117,9 @@
     "JSONC": { "formatter": { "language_server": { "name": "biome" } } },
     "CSS": { "formatter": { "language_server": { "name": "biome" } } },
   },
-  "lsp": {},
+  "lsp": {
+    "eslint": {
+      "enable": false
+    }
+  },
 }

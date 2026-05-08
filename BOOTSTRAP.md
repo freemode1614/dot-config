@@ -27,8 +27,8 @@ cd ~/.config
 
 ### 🐚 Shell 环境
 - **Zsh** - 现代化的 Shell
-- **Oh My Zsh** - Zsh 配置框架
-- **Powerlevel10k** - 快速、可定制的主题
+- **Sheldon** - Zsh 插件管理器
+- **Starship** - 跨 shell prompt
 
 ### 📝 编辑器
 - **Neovim** - 基于 LazyVim 的配置
@@ -43,7 +43,6 @@ cd ~/.config
 - **Lazygit** - 终端 Git UI
 - **GitHub CLI** - GitHub 命令行工具
 - **uv** - 极速 Python 包管理器
-- **Podman** - 容器引擎
 
 ### 🤖 AI 工具
 - **Opencode** - AI 编码助手
@@ -54,7 +53,7 @@ cd ~/.config
 - **fd** - 现代化 find 替代
 - **bat** - 带语法高亮的 cat
 - **eza** - 现代化 ls 替代
-- **btop** - 系统资源监视器
+- **yazi** - 快速文件管理器
 
 ## 🎯 使用流程
 
@@ -87,21 +86,13 @@ zellij attach dev --create
 source ~/.zshrc
 ```
 
-### 2. 配置 Powerlevel10k
-
-如果是首次安装，运行：
-
-```bash
-p10k configure
-```
-
-### 3. 登录 GitHub
+### 2. 登录 GitHub
 
 ```bash
 gh auth login
 ```
 
-### 4. 配置 Zed
+### 3. 配置 Zed
 
 Zed 的配置文件 `settings.json` 包含个人 SSH 和 AI 配置，已被 `.gitignore` 忽略。
 
@@ -112,7 +103,7 @@ cp ~/.config/zed/settings.json.example ~/.config/zed/settings.json
 # 编辑 settings.json 添加你的配置
 ```
 
-### 5. 配置 Opencode
+### 4. 配置 Opencode
 
 ```bash
 # 创建配置文件
@@ -127,23 +118,21 @@ cat > ~/.config/opencode/opencode.json << 'EOF'
 EOF
 ```
 
-### 6. 设置字体
-
-确保在终端设置中将字体更改为 **MesloLGS NF**（Nerd Font），以获得最佳图标显示效果。
-
 ## 🗂️ 目录结构
 
 ```
 ~/.config/
-├── containers/     # Podman 配置
 ├── gh/            # GitHub CLI 配置
 ├── lazygit/       # Lazygit 配置
 ├── mise/          # Mise 版本管理配置
 ├── nvim/          # Neovim 配置（子模块）
 ├── opencode/      # Opencode AI 配置
 ├── pip/           # pip 配置
+├── sheldon/       # Sheldon 插件配置
+├── starship.toml  # Starship prompt 配置
 ├── uv/            # uv Python 配置
 ├── wezterm/       # WezTerm 配置（子模块）
+├── yazi/          # Yazi 文件管理器配置
 ├── zed/           # Zed 编辑器配置
 ├── zellij/        # Zellij 配置
 └── zsh/           # Zsh 配置
@@ -172,9 +161,7 @@ git submodule update --remote --merge
 | `gh/hosts.yml` | GitHub 认证 | 运行 `gh auth login` |
 | `zed/settings.json` | 个人 SSH 和 AI 配置 | 手动创建或修改 |
 | `opencode/opencode.json` | API 配置 | 手动创建 |
-| `containers/auth.json` | 镜像仓库认证 | 重新认证 |
 | `zsh/.zsh_history` | Shell 历史 | 自动生成 |
-| `zsh/.p10k.zsh` | P10k 配置 | 运行 `p10k configure` |
 
 ### 子模块
 
@@ -202,18 +189,6 @@ source ~/.zshrc
 # 或者重启终端
 exec zsh
 ```
-
-### 字体显示异常
-
-确保安装了 Nerd Font：
-
-```bash
-# macOS
-brew tap homebrew/cask-fonts
-brew install --cask font-meslo-lg-nerd-font
-```
-
-然后在终端设置中将字体改为 `MesloLGS NF`。
 
 ## 📄 许可
 
