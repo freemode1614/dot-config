@@ -7,19 +7,24 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
+  "preview_tabs": {
+    "enable_keep_preview_on_code_navigation": true
+  },
+  "bottom_dock_layout": "contained",
+  "cli_default_open_behavior": "new_window",
   "agent_servers": {
     "opencode": {
       "type": "registry"
     }
   },
   "outline_panel": {
-    "dock": "right"
+    "dock": "left"
   },
   "collaboration_panel": {
-    "dock": "right"
+    "dock": "left"
   },
   "git_panel": {
-    "dock": "right"
+    "dock": "left"
   },
   "disable_ai": false,
   "edit_predictions": {
@@ -40,7 +45,7 @@
     },
   ],
   "agent": {
-    "dock": "left",
+    "dock": "right",
     "play_sound_when_agent_done": "always",
     "default_profile": "write",
     "default_model": {
@@ -78,7 +83,7 @@
   },
   "restore_on_startup": "launchpad",
   "project_panel": {
-    "dock": "right"
+    "dock": "left"
   },
   "tabs": {
     "file_icons": true,
@@ -110,9 +115,9 @@
   // The name of a font to use for rendering text in the editor
   "buffer_font_family": "Maple Mono NF CN",
   "theme": {
-    "mode": "dark",
+    "mode": "system",
     "light": "Ayu Light",
-    "dark": "Catppuccin Mocha",
+    "dark": "Ayu Dark",
   },
   // export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897
   // "proxy": "http://127.0.0.1:7897",
@@ -155,8 +160,6 @@
     "CSS": { "formatter": { "language_server": { "name": "biome" } } },
   },
   "lsp": {
-    "eslint": {
-      "enable": false
-    }
+    "eslint": {}
   },
 }
