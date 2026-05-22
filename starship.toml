@@ -1,36 +1,31 @@
-# Pokemon Kawaii Prompt
-# https://starship.rs/config/
+# Minimal Prompt
 
 command_timeout = 10000
 
 format = """
-[  ●´Å`) ~ $directory  ⌥ $branch $git_status  ~ ](bold yellow)
+$directory$git_branch
 $character
 """
 
-[character]
-success_symbol = "[ ٩(ᵔᴥᵔ)۶ ](bold yellow)"
-error_symbol = "[ ٩(´Å`)۶ ](bold red)"
-
 [directory]
-style = "bold yellow"
+style = "bold white"
 truncation_length = 3
 truncate_to_repo = true
-format = "[ ●´Å`) ~ $path ]($style) "
+format = "[ $path ]($style)"
 
 [git_branch]
-symbol = " ⌥ "
+symbol = " "
 style = "bold blue"
 format = "[$symbol$branch]($style)"
 
 [git_status]
 style = "bold yellow"
 format = "[$all_status$ahead$behind]($style) "
-ahead = "⬆${count}"
-behind = "⬇${count}"
-modified = "⚠"
+ahead = "↑${count}"
+behind = "↓${count}"
+modified = "•"
 untracked = "+"
-deleted = "✘"
+deleted = "×"
 
 [python]
 disabled = true
