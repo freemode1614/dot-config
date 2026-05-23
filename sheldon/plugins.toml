@@ -25,5 +25,3 @@ github = "Aloxaf/fzf-tab"
 # 目录跳转 (zoxide)
 [plugins.zoxide]
 github = "zoxide/zoxide"
-
-

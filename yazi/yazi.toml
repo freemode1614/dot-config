@@ -33,10 +33,6 @@ reveal = [
 [open]
 # 打开规则
 rules = [
-	{ name = "*.html", use = "open" },
-	{ name = "*.json", use = "edit" },
-	{ name = "*/", use = [ "open", "reveal" ] },
-	{ use = "open" },
 ]
 
 [tasks]

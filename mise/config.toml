@@ -1,5 +1,5 @@
 [tools]
-biome = "2.4.13"
+biome = "2"
 bun = "latest"
 node = "24"
 pnpm = "10"
