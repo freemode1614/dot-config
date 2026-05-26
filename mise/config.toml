@@ -2,7 +2,8 @@
 biome = "2"
 bun = "latest"
 node = "24"
-pnpm = "10"
+pnpm = "11"
+rust = "1.95.0"
 yarn = "4"
 
 [settings]

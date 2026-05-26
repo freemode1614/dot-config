@@ -8,7 +8,7 @@ $character
 """
 
 [directory]
-style = "bold white"
+style = "bold green"
 truncation_length = 3
 truncate_to_repo = true
 format = "[ $path ]($style)"
