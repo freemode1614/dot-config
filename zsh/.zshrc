@@ -30,6 +30,9 @@ if command -v mise &>/dev/null; then
     export MISE_SHELL=zsh
 fi
 
+# Bun 全局包 bin
+export PATH="$HOME/.bun/bin:$PATH"
+
 # --------------------------------------------
 # 3. 补全系统
 # --------------------------------------------
