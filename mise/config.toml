@@ -2,9 +2,4 @@
 biome = "2"
 bun = "latest"
 node = "24"
-pnpm = "11"
-rust = "1.95.0"
 yarn = "4"
-
-[settings]
-idiomatic_version_file_enable_tools = ["python"]
