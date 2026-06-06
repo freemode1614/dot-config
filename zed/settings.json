@@ -45,7 +45,7 @@
 	],
 	"agent": {
 		"dock": "right",
-		"play_sound_when_agent_done": true,
+		"play_sound_when_agent_done": "always",
 		"default_profile": "write",
 		"default_model": {
 			"provider": "MiniMax-M2.1",
