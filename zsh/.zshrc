@@ -74,10 +74,10 @@ fi
 # --------------------------------------------
 # 8. 别名
 # --------------------------------------------
-alias zj="zellij"
 alias lg="lazygit"
 alias cl="clear"
 alias y="yazi"
+alias z="zellij"
 
 function yy() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
