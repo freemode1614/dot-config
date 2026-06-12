@@ -375,11 +375,11 @@ default_layout "compact"
 // 默认模式
 default_mode "normal"
 
-// 简化 UI（如果你不喜欢特殊字体）
-// simplified_ui true
+// 简化 UI（极简模式，隐藏边框和状态栏）
+simplified_ui true
 
 // Pane 边框
-pane_frames true
+pane_frames false
 
 // 鼠标支持
 mouse_mode true
