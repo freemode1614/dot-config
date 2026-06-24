@@ -13,7 +13,10 @@
 	"bottom_dock_layout": "contained",
 	"agent_servers": {
 		"opencode": {
-			"type": "registry"
+			"default_config_options": {
+    "model": "opencode/deepseek-v4-flash-free"
+   },
+   "type": "registry"
 		}
 	},
 	"outline_panel": {
@@ -111,7 +114,7 @@
 	"buffer_font_family": "Maple Mono NF CN",
 	"theme": {
 		"mode": "system",
-		"light": "Ayu Light",
+		"light": "Catppuccin Mocha",
 		"dark": "Catppuccin Mocha"
 	},
 	// export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897
