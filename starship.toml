@@ -1,31 +1,70 @@
-# Minimal Prompt
+# Two-line prompt with status line (muted palette)
 
 command_timeout = 10000
 
 format = """
-$directory$git_branch
-$character
-"""
+$os$username@$hostname$container$ssh $directory$git_branch$git_status $time
+$character"""
+
+[os]
+disabled = false
+format = "[$symbol]($style)"
+style = "fg:#8a9ba8"
+
+[os.symbols]
+Linux = " "
+Macos = " "
+Windows = " "
+
+[username]
+show_always = true
+format = "[$user]($style)"
+style_user = "fg:#88b8a8"
+
+[hostname]
+ssh_only = false
+format = "[@$hostname]($style)"
+style = "fg:#88b8a8"
 
 [directory]
-style = "bold green"
+style = "fg:#9abf88"
 truncation_length = 3
 truncate_to_repo = true
-format = "[ $path ]($style)"
+format = "[ $path ]($style) "
 
 [git_branch]
 symbol = " "
-style = "bold blue"
-format = "[$symbol$branch]($style)"
+style = "fg:#a8a0c8"
+format = "[$symbol$branch]($style) "
 
 [git_status]
-style = "bold yellow"
-format = "[$all_status$ahead$behind]($style) "
+style = "fg:#c8b88a"
+format = "[$all_status$ahead$behind]($style)"
 ahead = "↑${count}"
 behind = "↓${count}"
-modified = "•"
+modified = "●"
 untracked = "+"
 deleted = "×"
+staged = "✔"
+renamed = "→"
+
+[container]
+disabled = false
+symbol = " "
+format = "[$symbol]($style)"
+style = "fg:#c8a89a"
+
+[time]
+disabled = false
+format = "[ $time ]($style)"
+style = "fg:#8a9ba8"
+time_format = "%H:%M"
+utc_time_offset = "local"
+
+[character]
+success_symbol = "[❯](fg:#9abf88)"
+error_symbol = "[❯](fg:#c89a9a)"
+vicmd_symbol = "[❮](fg:#c8b88a)"
 
 [python]
 disabled = true
@@ -36,5 +75,27 @@ disabled = true
 [rust]
 disabled = true
 
+[mise]
+disabled = false
+format = "[$symbol$version]($style) "
+style = "fg:#9ab8c8"
+symbol = " "
+
 [line_break]
 disabled = false
+
+[cmd_duration]
+min_time = 2_000
+format = "set $terminfo enable_rPROMPT$ \x1b[1A\x1b[\\$PROMPT_EOL_MARK\x5b took $duration \x5b(fg:#c8b88a)\x1b[1B\x1b[\\$terminfo disable_rPROMPT$"
+
+[status]
+disabled = false
+format = "set $terminfo enable_rPROMPT$ \x1b[1A\x1b[\\$PROMPT_EOL_MARK\x5b exit $status \x5b(fg:#c89a9a)\x1b[1B\x1b[\\$terminfo disable_rPROMPT$"
+success_symbol = ""
+not_executable_symbol = ""
+
+[jobs]
+symbol = " "
+format = "set $terminfo enable_rPROMPT$ \x1b[1A\x1b[\\$PROMPT_EOL_MARK[$symbol$number\\]$style)\x1b[1B\x1b[\\$terminfo disable_rPROMPT$"
+style = "fg:#a8a0c8"
+threshold = 1
