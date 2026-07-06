@@ -4,8 +4,8 @@
 
 // macOS: 不拦截 Cmd 快捷键，让系统处理复制粘贴
 copy_options {
-    copy_on_select false
-    copy_command "true"
+    copy_on_select true
+    copy_command "pbcopy"
 }
 
 keybinds clear-defaults=true {
@@ -31,6 +31,10 @@ keybinds clear-defaults=true {
     // Normal 模式（默认）
     // ============================================
     normal {
+        // macOS: 透传 Cmd+C/V 到 pane
+        bind "Super c" { Write 3; }
+        bind "Super v" { Write 22; }
+
         // 快速进入各种模式
         bind "Ctrl p" { SwitchToMode "pane"; }
         bind "Ctrl t" { SwitchToMode "tab"; }
@@ -74,6 +78,10 @@ keybinds clear-defaults=true {
     // Pane 模式（Ctrl+p 进入）
     // ============================================
     pane {
+        // macOS: 透传 Cmd+C/V 到 pane
+        bind "Super c" { Write 3; }
+        bind "Super v" { Write 22; }
+
         bind "Ctrl Shift p" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
 
@@ -108,6 +116,10 @@ keybinds clear-defaults=true {
     // Tab 模式（Ctrl+t 进入）
     // ============================================
     tab {
+        // macOS: 透传 Cmd+C/V 到 pane
+        bind "Super c" { Write 3; }
+        bind "Super v" { Write 22; }
+
         bind "Ctrl Shift t" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
 
@@ -156,6 +168,10 @@ keybinds clear-defaults=true {
     // Resize 模式（Ctrl+n 进入）
     // ============================================
     resize {
+        // macOS: 透传 Cmd+C/V 到 pane
+        bind "Super c" { Write 3; }
+        bind "Super v" { Write 22; }
+
         bind "Ctrl Shift n" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         bind "Enter" { SwitchToMode "normal"; }
@@ -184,6 +200,10 @@ keybinds clear-defaults=true {
     // Move 模式（Ctrl+m 进入）
     // ============================================
     move {
+        // macOS: 透传 Cmd+C/V 到 pane
+        bind "Super c" { Write 3; }
+        bind "Super v" { Write 22; }
+
         bind "Ctrl Shift m" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
 
@@ -200,6 +220,10 @@ keybinds clear-defaults=true {
     // Scroll 模式（Ctrl+s 进入）
     // ============================================
     scroll {
+        // macOS: 透传 Cmd+C/V 到 pane
+        bind "Super c" { Write 3; }
+        bind "Super v" { Write 22; }
+
         bind "Ctrl Shift s" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         bind "q" { SwitchToMode "normal"; }
@@ -231,6 +255,10 @@ keybinds clear-defaults=true {
     // Search 模式
     // ============================================
     search {
+        // macOS: 透传 Cmd+C/V 到 pane
+        bind "Super c" { Write 3; }
+        bind "Super v" { Write 22; }
+
         bind "Esc" { SwitchToMode "scroll"; }
         // Ctrl c 已解绑，避免劫持系统快捷键
         bind "Enter" { SwitchToMode "scroll"; }
@@ -246,6 +274,10 @@ keybinds clear-defaults=true {
     // Session 模式（Ctrl+o 进入）
     // ============================================
     session {
+        // macOS: 透传 Cmd+C/V 到 pane
+        bind "Super c" { Write 3; }
+        bind "Super v" { Write 22; }
+
         bind "Ctrl Shift o" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         bind "q" { SwitchToMode "normal"; }
