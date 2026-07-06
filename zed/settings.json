@@ -7,16 +7,25 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-	"preview_tabs": {
+	"format_on_save": "off",
+ "cli_default_open_behavior": "new_window",
+ "preview_tabs": {
 		"enable_keep_preview_on_code_navigation": true
 	},
 	"bottom_dock_layout": "contained",
 	"agent_servers": {
+		"qwen-code": {
+			"default_config_options": {
+				"model": "qwen3.7-plus(openai)",
+				"mode": "auto"
+			},
+			"type": "registry"
+		},
 		"opencode": {
 			"default_config_options": {
-    "model": "opencode/deepseek-v4-flash-free"
-   },
-   "type": "registry"
+				"model": "opencode/deepseek-v4-flash-free"
+			},
+			"type": "registry"
 		}
 	},
 	"outline_panel": {
@@ -36,16 +45,49 @@
 		"provider": "none"
 	},
 	"ssh_connections": [
-		{
-			"host": "73",
-			"args": [],
-			"projects": [
-				{
-					"paths": ["/home/wp"]
-				}
-			]
-		}
-	],
+  {
+   "host": "73",
+   "args": [],
+   "projects": [
+    {
+     "paths": [
+      "/home/wp"
+     ]
+    },
+    {
+     "paths": [
+      "/home/wp/developers"
+     ]
+    },
+    {
+     "paths": [
+      "/home/wp/developers/agent-factory/./"
+     ]
+    },
+    {
+     "paths": [
+      "/home/wp/developers/aidap-devops"
+     ]
+    },
+    {
+     "paths": [
+      "/home/wp/projects/ai-gateway/./"
+     ]
+    }
+   ]
+  },
+  {
+   "host": "2.105",
+   "args": [],
+   "projects": [
+    {
+     "paths": [
+      "/home/wp/projects/ai-gateway/./"
+     ]
+    }
+   ]
+  }
+ ],
 	"agent": {
 		"dock": "right",
 		"play_sound_when_agent_done": "always",

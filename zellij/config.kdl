@@ -2,6 +2,12 @@
 // WezTerm 负责：窗口管理、工作区、外观
 // Zellij 负责：Pane/Tab 管理、会话恢复
 
+// macOS: 不拦截 Cmd 快捷键，让系统处理复制粘贴
+copy_options {
+    copy_on_select false
+    copy_command "true"
+}
+
 keybinds clear-defaults=true {
     // ============================================
     // 基础按键解绑（WezTerm 已接管）
@@ -384,14 +390,7 @@ pane_frames false
 // 鼠标支持
 mouse_mode true
 
-// 复制命令（macOS）
-copy_command "pbcopy"
-
-// 复制到系统剪贴板
-copy_clipboard "system"
-
-// 选中即复制
-copy_on_select true
+// 复制命令（macOS）- 已由顶部 copy_options 覆盖
 
 // 主题
 theme "molokai"

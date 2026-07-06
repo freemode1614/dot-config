@@ -2,4 +2,5 @@
 biome = "2"
 bun = "latest"
 node = "24"
+pnpm = "11"
 yarn = "4"
