@@ -17,7 +17,7 @@
 		"qwen-code": {
 			"default_config_options": {
 				"model": "qwen3.7-plus(openai)",
-				"mode": "auto"
+				"mode": "yolo"
 			},
 			"type": "registry"
 		},

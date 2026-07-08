@@ -29,7 +29,8 @@ style = "fg:#88b8a8"
 [directory]
 style = "fg:#9abf88"
 truncation_length = 3
-truncate_to_repo = true
+truncate_to_repo = false
+repo_root_style = "none"
 format = "[ $path ]($style) "
 
 [git_branch]
@@ -47,6 +48,7 @@ untracked = "+"
 deleted = "×"
 staged = "✔"
 renamed = "→"
+ignore_submodules = true
 
 [container]
 disabled = false
