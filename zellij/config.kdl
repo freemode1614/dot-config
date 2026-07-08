@@ -25,18 +25,15 @@ keybinds clear-defaults=true {
     // ============================================
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
-        // macOS: 复制粘贴必须能在 locked 模式下用
+        // macOS: Copy（Paste 由 WezTerm 原生处理）
         bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
     }
 
     // ============================================
     // Normal 模式（默认）
     // ============================================
     normal {
-        // macOS: 复制粘贴
-        bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
+        // macOS: Cmd+C/V 由 WezTerm 原生处理，zellij 不拦截
         // 快速进入各种模式
         bind "Ctrl p" { SwitchToMode "pane"; }
         bind "Ctrl t" { SwitchToMode "tab"; }
@@ -80,9 +77,7 @@ keybinds clear-defaults=true {
     // Pane 模式（Ctrl+p 进入）
     // ============================================
     pane {
-        // macOS: 复制粘贴
-        bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
+        // macOS: Cmd+C/V 由 WezTerm 原生处理，zellij 不拦截
         bind "Ctrl Shift p" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
 
@@ -117,9 +112,7 @@ keybinds clear-defaults=true {
     // Tab 模式（Ctrl+t 进入）
     // ============================================
     tab {
-        // macOS: 复制粘贴
-        bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
+        // macOS: Cmd+C/V 由 WezTerm 原生处理，zellij 不拦截
         bind "Ctrl Shift t" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
 
@@ -168,9 +161,7 @@ keybinds clear-defaults=true {
     // Resize 模式（Ctrl+n 进入）
     // ============================================
     resize {
-        // macOS: 复制粘贴
-        bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
+        // macOS: Cmd+C/V 由 WezTerm 原生处理，zellij 不拦截
         bind "Ctrl Shift n" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         bind "Enter" { SwitchToMode "normal"; }
@@ -199,9 +190,7 @@ keybinds clear-defaults=true {
     // Move 模式（Ctrl+m 进入）
     // ============================================
     move {
-        // macOS: 复制粘贴
-        bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
+        // macOS: Cmd+C/V 由 WezTerm 原生处理，zellij 不拦截
         bind "Ctrl Shift m" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
 
@@ -218,9 +207,7 @@ keybinds clear-defaults=true {
     // Scroll 模式（Ctrl+s 进入）
     // ============================================
     scroll {
-        // macOS: 复制粘贴
-        bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
+        // macOS: Cmd+C/V 由 WezTerm 原生处理，zellij 不拦截
         bind "Ctrl Shift s" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         bind "q" { SwitchToMode "normal"; }
@@ -252,9 +239,7 @@ keybinds clear-defaults=true {
     // Search 模式
     // ============================================
     search {
-        // macOS: 复制粘贴
-        bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
+        // macOS: Cmd+C/V 由 WezTerm 原生处理，zellij 不拦截
         bind "Esc" { SwitchToMode "scroll"; }
         // Ctrl c 已解绑，避免劫持系统快捷键
         bind "Enter" { SwitchToMode "scroll"; }
@@ -270,9 +255,7 @@ keybinds clear-defaults=true {
     // Session 模式（Ctrl+o 进入）
     // ============================================
     session {
-        // macOS: 复制粘贴
-        bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
+        // macOS: Cmd+C/V 由 WezTerm 原生处理，zellij 不拦截
         bind "Ctrl Shift o" { SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
         bind "q" { SwitchToMode "normal"; }
@@ -327,9 +310,6 @@ keybinds clear-defaults=true {
     // Tmux 模式（兼容 Tmux 用户习惯）
     // ============================================
     tmux {
-        // macOS: 复制粘贴
-        bind "Super c" { Copy; }
-        bind "Super v" { Paste; }
         bind "Ctrl b" { Write 2; SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
 
