@@ -142,6 +142,6 @@ export PATH="$HOME/.opencode/bin:$PATH"
 # --------------------------------------------
 # 12. 自动启动 zellij（交互式 shell 且不在 zellij 内）
 # --------------------------------------------
-if [[ -n "$TERM_PROGRAM" && -z "$ZELLIJ" && -x "$(command -v zellij)" ]]; then
-    exec zellij
-fi
+# if [[ -n "$TERM_PROGRAM" && -z "$ZELLIJ" && -x "$(command -v zellij)" ]]; then
+#     exec zellij
+# fi
