@@ -1,6 +1,6 @@
 {
   "featureFlags": {},
-  "profile": "custom",
+  "profile": "core",
   "delivery": "both",
   "telemetry": {
     "noticeSeen": true,
@@ -10,6 +10,7 @@
     "propose",
     "explore",
     "apply",
+    "sync",
     "archive"
   ]
 }

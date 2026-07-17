@@ -17,7 +17,7 @@
 		"qwen-code": {
 			"default_config_options": {
 				"model": "qwen3.7-plus(openai)",
-				"mode": "yolo"
+				"mode": "auto"
 			},
 			"type": "registry"
 		},
@@ -66,6 +66,11 @@
     },
     {
      "paths": [
+      "/home/wp/developers/ai-gateway/./"
+     ]
+    },
+    {
+     "paths": [
       "/home/wp/developers/aidap-devops"
      ]
     },
@@ -82,7 +87,23 @@
    "projects": [
     {
      "paths": [
+      "/home/wp/projects/./"
+     ]
+    },
+    {
+     "paths": [
       "/home/wp/projects/ai-gateway/./"
+     ]
+    }
+   ]
+  },
+  {
+   "host": "86",
+   "args": [],
+   "projects": [
+    {
+     "paths": [
+      "/Users/zach/Documents/projects/ai-gateway"
      ]
     }
    ]
