@@ -129,3 +129,11 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # OpenCode
 export PATH="$HOME/.opencode/bin:$PATH"
+
+# 加载 conf.d 下的配置片段
+for f in ${ZDOTDIR:-$HOME/.config/zsh}/conf.d/*.zsh; do
+    [ -r "$f" ] && source "$f"
+done
+
+# Added by qodercli install
+export PATH="$PATH:$HOME/.local/bin"
