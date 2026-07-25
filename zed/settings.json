@@ -14,7 +14,8 @@
 	"agent_servers": {
 		"opencode": {
 			"default_config_options": {
-    "model": "opencode/deepseek-v4-flash-free"
+    "effort": "thinking",
+    "model": "minimax-cn/MiniMax-M3"
    },
    "type": "registry"
 		}
@@ -36,16 +37,35 @@
 		"provider": "none"
 	},
 	"ssh_connections": [
-		{
-			"host": "73",
-			"args": [],
-			"projects": [
-				{
-					"paths": ["/home/wp"]
-				}
-			]
-		}
-	],
+  {
+   "host": "73",
+   "args": [],
+   "projects": [
+    {
+     "paths": [
+      "/home/wp"
+     ]
+    }
+   ]
+  },
+  {
+   "host": "100.88.242.29",
+   "username": "leiwenpeng",
+   "args": [],
+   "projects": [
+    {
+     "paths": [
+      "/Users/leiwenpeng/Projects/./"
+     ]
+    },
+    {
+     "paths": [
+      "/Users/leiwenpeng/Projects/gateway-poc/./"
+     ]
+    }
+   ]
+  }
+ ],
 	"agent": {
 		"dock": "right",
 		"play_sound_when_agent_done": "always",
