@@ -19,7 +19,7 @@ return {
 
     -- 滚动条和分割线
     scrollbar_thumb = "#b8b4af",
-    split = "#c8c4bf",
+    split = "#8a8681",
 
     -- ANSI 颜色（16色）
     -- 修正：黑色应该是深色，不是白色！
