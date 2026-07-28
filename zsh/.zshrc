@@ -4,15 +4,12 @@
 # ============================================
 
 # --------------------------------------------
-# 1. Homebrew 环境 (macOS) — 仅当未设置时执行
+# 1. Homebrew 环境 (macOS)
 # --------------------------------------------
-if [[ -z "$_HOMEBREW_SHELLENV_DONE" ]]; then
-    if [[ -d "/opt/homebrew/bin" ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-    elif [[ -x "/usr/local/bin/brew" ]]; then
-        eval "$(/usr/local/bin/brew shellenv)"
-    fi
-    export _HOMEBREW_SHELLENV_DONE=1
+if [[ -d "/opt/homebrew/bin" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 # Homebrew 镜像 (可选，取消注释使用)
@@ -30,26 +27,20 @@ export PATH="$PATH:$HOME/.lmstudio/bin"
 # --------------------------------------------
 if command -v mise &>/dev/null; then
     export PATH="$HOME/.local/share/mise/shims:$PATH"
-    eval "$(mise activate zsh)" 2>/dev/null
+    export MISE_SHELL=zsh
 fi
 
 # Bun 全局包 bin
 export PATH="$HOME/.bun/bin:$PATH"
 
 # --------------------------------------------
-# 3. 补全系统 — 优化 compinit 性能
+# 3. 补全系统
 # --------------------------------------------
 autoload -Uz compinit
-
-# 使用固定的 zcompdump 路径，避免多终端竞争
-ZCOMPDUMP_FILE="$HOME/.config/zsh/.zcompdump-$ZSH_VERSION"
-
-# 跳过 compaudit 安全检查（已知安全目录），大幅提升 compinit 速度
-# 每天重新扫描一次补全文件，其余时间使用缓存
-if [[ -n "$ZCOMPDUMP_FILE"(#qN.mh+24) ]]; then
-    compinit -u -d "$ZCOMPDUMP_FILE"
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit
 else
-    compinit -u -C -d "$ZCOMPDUMP_FILE"
+    compinit -C
 fi
 
 # --------------------------------------------
@@ -67,14 +58,14 @@ if command -v sheldon &>/dev/null; then
 fi
 
 # --------------------------------------------
-# 6. zoxide (目录跳转) — sheldon 已加载插件，只需 init
+# 6. zoxide (目录跳转)
 # --------------------------------------------
 if command -v zoxide &>/dev/null; then
     eval "$(zoxide init zsh)"
 fi
 
 # --------------------------------------------
-# 7. fzf (模糊搜索) — 延迟加载
+# 7. fzf (模糊搜索)
 # --------------------------------------------
 if command -v fzf &>/dev/null; then
     eval "$(fzf --zsh)"
@@ -139,9 +130,10 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # OpenCode
 export PATH="$HOME/.opencode/bin:$PATH"
 
-# --------------------------------------------
-# 12. 自动启动 zellij（交互式 shell 且不在 zellij 内）
-# --------------------------------------------
-# if [[ -n "$TERM_PROGRAM" && -z "$ZELLIJ" && -x "$(command -v zellij)" ]]; then
-#     exec zellij
-# fi
+# 加载 conf.d 下的配置片段
+for f in ${ZDOTDIR:-$HOME/.config/zsh}/conf.d/*.zsh; do
+    [ -r "$f" ] && source "$f"
+done
+
+# Added by qodercli install
+export PATH="$PATH:$HOME/.local/bin"

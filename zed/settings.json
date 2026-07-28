@@ -7,25 +7,17 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-	"format_on_save": "off",
- "cli_default_open_behavior": "new_window",
- "preview_tabs": {
+	"preview_tabs": {
 		"enable_keep_preview_on_code_navigation": true
 	},
 	"bottom_dock_layout": "contained",
 	"agent_servers": {
-		"qwen-code": {
-			"default_config_options": {
-				"model": "qwen3.7-plus(openai)",
-				"mode": "auto"
-			},
-			"type": "registry"
-		},
 		"opencode": {
 			"default_config_options": {
-				"model": "opencode/deepseek-v4-flash-free"
-			},
-			"type": "registry"
+    "effort": "thinking",
+    "model": "minimax-cn/MiniMax-M3"
+   },
+   "type": "registry"
 		}
 	},
 	"outline_panel": {
@@ -53,57 +45,22 @@
      "paths": [
       "/home/wp"
      ]
-    },
-    {
-     "paths": [
-      "/home/wp/developers"
-     ]
-    },
-    {
-     "paths": [
-      "/home/wp/developers/agent-factory/./"
-     ]
-    },
-    {
-     "paths": [
-      "/home/wp/developers/ai-gateway/./"
-     ]
-    },
-    {
-     "paths": [
-      "/home/wp/developers/aidap-devops"
-     ]
-    },
-    {
-     "paths": [
-      "/home/wp/projects/ai-gateway/./"
-     ]
     }
    ]
   },
   {
-   "host": "2.105",
+   "host": "100.88.242.29",
+   "username": "leiwenpeng",
    "args": [],
    "projects": [
     {
      "paths": [
-      "/home/wp/projects/./"
+      "/Users/leiwenpeng/Projects/./"
      ]
     },
     {
      "paths": [
-      "/home/wp/projects/ai-gateway/./"
-     ]
-    }
-   ]
-  },
-  {
-   "host": "86",
-   "args": [],
-   "projects": [
-    {
-     "paths": [
-      "/Users/zach/Documents/projects/ai-gateway"
+      "/Users/leiwenpeng/Projects/gateway-poc/./"
      ]
     }
    ]
