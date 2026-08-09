@@ -13,8 +13,9 @@ config.window_background_opacity = 0.8
 config.macos_window_background_blur = 20
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.enable_scroll_bar = false
+-- 左右 Alt 都直通 zellij (不组合字符), 让 Alt+hjkl 在两侧都生效
 config.send_composed_key_when_left_alt_is_pressed = false
-config.send_composed_key_when_right_alt_is_pressed = true
+config.send_composed_key_when_right_alt_is_pressed = false
 
 config.window_padding = {
     left = 8,
@@ -43,13 +44,33 @@ config.window_frame = {
     inactive_titlebar_bg = "#192330",
 }
 
+-- Leader Key (与 zellij tmux 兼容模式同键, 互不冲突)
+config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 1000 }
+
 config.keys = {
+    -- Pane 拆分 / 导航 (在 zellij 内时由 zellij 处理; 这里只作用于 wezterm 窗格)
     { key = "|", mods = "CTRL|SHIFT", action = action.SplitVertical({ domain = "CurrentPaneDomain" }) },
     { key = "_", mods = "CTRL|SHIFT", action = action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
     { key = "H", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Left") },
     { key = "J", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Down") },
     { key = "K", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Up") },
     { key = "L", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Right") },
+
+    -- Leader 快捷键 (与 README/BOOTSTRAP 文档对齐)
+    { key = "f", mods = "LEADER", action = "SwitchToWorkspace" },
+    { key = "F", mods = "LEADER", action = "RenameWorkspace", args = { "New workspace" } },
+    { key = "[", mods = "LEADER", action = "ActivateWorkspaceRelative", args = { -1 } },
+    { key = "]", mods = "LEADER", action = "ActivateWorkspaceRelative", args = {  1 } },
+    { key = "g", mods = "LEADER", action = "SpawnCommandInNewWindow", args = { "lazygit" } },
+    { key = "t", mods = "LEADER", action = "SpawnCommandInNewWindow", args = { "btop" } },
+    { key = "z", mods = "LEADER", action = "SpawnCommandInNewWindow", args = { "zellij", "attach", "main", "--create" } },
+    { key = "Z", mods = "LEADER", action = "SpawnCommandInNewWindow", args = { "zellij", "attach", "dev",  "--create" } },
+    { key = "Insert", mods = "LEADER", action = "ActivateCopyMode" },
+
+    -- 字体调整 (macOS 标准)
+    { key = "-", mods = "CMD", action = "DecreaseFontSize" },
+    { key = "=", mods = "CMD", action = "IncreaseFontSize" },
+    { key = "0", mods = "CMD", action = "ResetFontSize" },
 }
 
 config.mouse_bindings = {}
@@ -118,6 +139,12 @@ end)
 wezterm.on("format-window-title", function(tab, pane, tabs, panes, config)
     local title = tab.active_pane.title
     return title
+end)
+
+-- 启动时自动运行 zellij, 匹配 README "打开 WezTerm 即用 Zellij" 流程
+wezterm.on("gui-startup", function(cmd)
+    -- 仅当 spawn 时直接调 zellij attach; 如已有 session 则 attach main, 没有则 --create
+    cmd:SpawnCommandInExistingWindow { args = { "zellij", "attach", "main", "--create" } }
 end)
 
 return config
