@@ -34,14 +34,13 @@ config.scrollback_lines = 100000
 config.max_fps = 120
 config.animation_fps = 60
 
--- 主题设置
-config.colors = require("lua/tokyonight")
+-- 主题设置 (Catppuccin Mocha, 与 zed/nvim/yazi/lazygit 一致)
+config.colors = require("lua/catppuccin-mocha")
 
 config.window_frame = {
     font = wezterm.font({ family = "Maple Mono NF CN", weight = "Bold" }),
     font_size = 12.0,
-    active_titlebar_bg = "#131a24",
-    inactive_titlebar_bg = "#192330",
+    -- 背景色由 theme 决定 (config.colors); 仅保留字体覆盖
 }
 
 -- Leader Key (与 zellij tmux 兼容模式同键, 互不冲突)

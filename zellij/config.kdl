@@ -396,8 +396,8 @@ copy_clipboard "system"
 // 选中即复制
 copy_on_select true
 
-// 主题
-theme "molokai"
+// 主题 (catppuccin-mocha, 与 wezterm/zed/nvim/yazi 一致)
+theme "catppuccin-mocha"
 
 // 滚动缓冲区大小
 scroll_buffer_size 100000
