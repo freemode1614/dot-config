@@ -1,0 +1,71 @@
+# Gitleaks rules for dot-config
+# https://github.com/gitleaks/gitleaks-action/blob/master/README.md
+
+# 本仓库不追踪敏感文件 (见 .gitignore), 但历史 commit 可能仍含泄漏值
+# 此配置让 gitleaks 优先扫描历史, 减少 false positive
+
+title = "dot-config secrets rules"
+
+# 允许的 "key=xxx" 形式 (示例配置中的占位符)
+[allowlist]
+description = "Allow common placeholders in example configs"
+regexes = [
+  # 示例配置中的占位符
+  '''(?i)(api[_-]?key|token|secret|password)\s*[=:]\s*["']?(your[-_]?(api[-_]?key|token)|xxx|placeholder|<.+?>|CHANGEME|REDACTED|your-?)["']?''',
+  # 占位 IP (例: 192.168.0.1, 10.0.0.1)
+  '''\b(192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|127\.0\.0\.1|0\.0\.0\.0)\b''',
+  # 已知示例域名
+  '''\b(example\.(com|org|net|io)|your-?(domain|host|server|url))\b''',
+]
+
+# 允许的文件路径 (不扫描)
+paths = [
+  '''\.gitignore$''',
+  '''\.gitattributes$''',
+  '''\.editorconfig$''',
+  '''README\.md$''',
+  '''BOOTSTRAP\.md$''',
+  '''docs/security-incident-.*\.md$''',
+  '''\.md$''',                       # markdown 一般无 secret
+]
+
+# 不要扫描的文件 (可以含 token 但不是 secret)
+files = [
+  '''package-lock\.json$''',
+  '''bun\.lock$''',
+  '''lazy-lock\.json$''',
+]
+
+# 自定义规则 (针对本仓库常见误报)
+[[rules]]
+id = "generic-api-key"
+description = "Generic API key pattern"
+regex = '''(?i)(api[_-]?key|api[_-]?token|access[_-]?token)\s*[=:]\s*["']?[A-Za-z0-9_\-]{20,}["']?'''
+tags = ["api", "key"]
+
+[[rules]]
+id = "private-ssh-key"
+description = "PEM private key"
+regex = '''-----BEGIN (RSA |EC |OPENSSH |DSA |PGP )?PRIVATE KEY(\sBLOCK)?-----'''
+tags = ["key", "private"]
+
+[[rules]]
+id = "tailscale-ip"
+description = "Tailscale CGNAT IP (100.64.0.0/10)"
+regex = '''\b100\.(6[4-9]|[7-9]\d|1[0-1]\d|12[0-7])\.\d{1,3}\.\d{1,3}\b'''
+tags = ["network", "internal"]
+
+[[rules]]
+id = "github-token"
+description = "GitHub personal access token"
+regex = '''gh[pousr]_[A-Za-z0-9_]{36,255}'''
+tags = ["github", "token"]
+
+[[rules]]
+id = "openai-key"
+description = "OpenAI / compatible API key (sk-...)"
+regex = '''sk-(proj-)?[A-Za-z0-9_\-]{20,}(T3BlbkFJ[A-Za-z0-9_\-]{20,})?'''
+tags = ["api", "openai"]
+
+# 允许 gitleaks 默认规则集 + 以上自定义
+# 让敏感数据 (SSH/IP/API key) 出现在任何 commit 都报警
