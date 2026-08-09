@@ -176,7 +176,9 @@ EOF
 }
 
 apply_pnpm_mirror() {
-  if command -v pnpm >/dev/null 2>&1 || [[ -f "$HOME/.local/share/mise/installs/pnpm/"* ]]; then
+  local pnpm_home="$HOME/.local/share/mise/installs/pnpm"
+  # pnpm 在 PATH 上, 或 mise 已安装过 pnpm (即使当前 shell 未激活 mise)
+  if command -v pnpm >/dev/null 2>&1 || compgen -d "$pnpm_home"/* >/dev/null 2>&1; then
     log_info "配置 pnpm 镜像..."
     pnpm config set registry https://registry.npmmirror.com 2>/dev/null || true
   fi

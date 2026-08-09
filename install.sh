@@ -37,7 +37,7 @@ log_step() {
 }
 
 # ERR trap — 失败时打印上下文
-trap 'rc=$?; log_error "命令失败 (exit=$rc) 在第 ${LINENO} 行: ${BASH_COMMAND}"' ERR
+trap 'log_error "命令失败 (exit=$?) 在第 ${LINENO} 行: ${BASH_COMMAND}"' ERR
 
 # --------------------------------------------
 # Flags
@@ -339,9 +339,8 @@ macos_curl_fallback() {
 
   # ----- WezTerm -----
   if [[ ! -d "/Applications/WezTerm.app" ]]; then
-    log_info "安装 WezTerm (从 wezterm.org)..."
-    local wt_url="https://wezfurlong.org/wezterm/wezterm-macos-$(curl -fsSL https://api.github.com/repos/wez/wezterm/releases/latest | grep -Eo '"tag_name": "[^"]+"' | head -1 | cut -d'"' -f4 | sed 's/-.*//').zip"
-    # wezterm 不直接发布 Mac zip, 改下载 nightly tarball
+log_info "安装 WezTerm (从 GitHub release)..."
+    local wt_url
     wt_url="https://github.com/wez/wezterm/releases/download/$(curl -fsSL https://api.github.com/repos/wez/wezterm/releases/latest | grep -Eo '"tag_name": "[^"]+"' | head -1 | cut -d'"' -f4)/WezTerm-macos.zip"
     local tmp; tmp="$(mktemp -d)"
     if github_download "$wt_url" "$tmp/wezterm.zip"; then
@@ -443,7 +442,8 @@ setup_dotfiles() {
         log_info "已取消, 保留现有 $CONFIG_DIR"
         exit 0
       fi
-      local backup="$HOME/.config_backup_$(date +%Y%m%d-%H%M%S)"
+      local backup
+      backup="$HOME/.config_backup_$(date +%Y%m%d-%H%M%S)"
       log_warn "备份现有配置 -> $backup"
       mv "$CONFIG_DIR" "$backup"
       git clone --depth 1 -b "$DOTFILES_BRANCH" "$DOTFILES_REPO" "$CONFIG_DIR"
