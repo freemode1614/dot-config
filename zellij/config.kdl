@@ -25,6 +25,8 @@ keybinds clear-defaults=true {
     // Normal 模式（默认）
     // ============================================
     normal {
+        // 进入 tmux 兼容模式 (与 WezTerm Leader 同键, 但作用域不同)
+        bind "Ctrl b" { SwitchToMode "tmux"; }
         // 快速进入各种模式
         bind "Ctrl p" { SwitchToMode "pane"; }
         bind "Ctrl t" { SwitchToMode "tab"; }
@@ -293,8 +295,9 @@ keybinds clear-defaults=true {
     // ============================================
     // Tmux 模式（兼容 Tmux 用户习惯）
     // ============================================
+    // 注意: 此模式不能做前缀 (zellij 没有 prefix 概念);
+    // 进入后保持 multi-key 模式, 直到按 Esc 返回 normal。
     tmux {
-        bind "Ctrl b" { Write 2; SwitchToMode "normal"; }
         bind "Esc" { SwitchToMode "normal"; }
 
         // 导航
