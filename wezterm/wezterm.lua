@@ -8,7 +8,7 @@ config.font = wezterm.font("Maple Mono NF CN")
 config.font_size = 14.0
 config.line_height = 1.2
 
-config.window_close_confirmation = "NeverPrompt"
+config.window_close_confirmation = "AlwaysPrompt"
 config.window_background_opacity = 0.8
 config.macos_window_background_blur = 20
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
