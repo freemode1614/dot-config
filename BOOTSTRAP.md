@@ -1,36 +1,14 @@
 # Bootstrap 初始化指南
 
-这个目录包含了一个完整的 dotfiles 初始化系统，用于快速配置新电脑的开发环境。
+这个目录包含了一套完整的 dotfiles 初始化系统，用于快速配置新电脑的开发环境。
 
 ## 🚀 快速开始
-
-### 方式一：直接运行（推荐）
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/freemode1614/dot-config/main/install.sh | bash -s -- --yes
 ```
 
-### 方式二：克隆后运行
-
-```bash
-git clone https://github.com/freemode1614/dot-config.git ~/.config
-cd ~/.config
-./install.sh
-```
-
-> 已不再使用 git submodule（`nvim/`、`wezterm/` 已 inline），clone 不需要 `--recursive`。
-
-### 支持的平台
-
-| 平台 | 包管理器 |
-|------|----------|
-| macOS (Apple Silicon / Intel) | Homebrew |
-| Debian / Ubuntu | apt |
-| Fedora / RHEL | dnf / yum |
-| Arch / Manjaro | pacman |
-| Alpine | apk |
-| openSUSE | zypper |
-| WSL | 走宿主 Linux 发行版的包管理器 |
+详细安装说明（支持平台 / 大陆镜像 / brew 兜底）见 [docs/install.md](docs/install.md)。
 
 ## 📦 安装内容
 
@@ -64,30 +42,7 @@ cd ~/.config
 - **fd** - 现代化 find 替代
 - **bat** - 带语法高亮的 cat
 - **eza** - 现代化 ls 替代
-- **yazi** - 快速文件管理器
-
-## 🎯 使用流程
-
-### 本地开发
-
-1. 打开 WezTerm
-2. 启动 Zellij 会话：
-   ```bash
-   zellij attach main --create
-   ```
-3. 在 Zellij 中使用快捷键：
-   - `Alt+hjkl` - 导航 Pane
-   - `Alt+1-9` - 切换 Tab
-   - `Ctrl+b g` - 启动 lazygit
-   - `Ctrl+b f` - 切换工作区
-
-### SSH 远程开发
-
-```bash
-ssh server
-zellij attach dev --create
-# 所有快捷键与本地完全一致
-```
+- **yazi** - 终端文件管理器
 
 ## ⚙️ 安装后配置
 
@@ -105,9 +60,7 @@ gh auth login
 
 ### 3. 配置 Zed
 
-Zed 的配置文件 `settings.json` 包含个人 SSH 和 AI 配置，已被 `.gitignore` 忽略。
-
-参考示例创建你的配置：
+`zed/settings.json` 包含个人 SSH 和 AI 配置，已被 `.gitignore` 忽略。参考示例创建：
 
 ```bash
 cp ~/.config/zed/settings.json.example ~/.config/zed/settings.json
@@ -117,32 +70,29 @@ cp ~/.config/zed/settings.json.example ~/.config/zed/settings.json
 ### 4. 配置 Opencode
 
 ```bash
-# 创建配置文件
 touch ~/.config/opencode/opencode.json
-
-# 添加你的 API 配置（示例）
-cat > ~/.config/opencode/opencode.json << 'EOF'
-{
-  "api_key": "your-api-key-here",
-  "api_base": "https://api.openai.com/v1"
-}
-EOF
+# 添加你的 API 配置
 ```
+
+> 更多敏感信息处理方式见 [docs/security.md](docs/security.md)。
 
 ## 🗂️ 目录结构
 
 ```
 ~/.config/
+├── docs/          # 文档 (安装/安全/故障排除)
 ├── gh/            # GitHub CLI 配置
 ├── lazygit/       # Lazygit 配置
+├── lib/           # 安装脚本公共库 (platform/pkg/mirror)
 ├── mise/          # Mise 版本管理配置
-├── nvim/          # Neovim 配置（子模块）
+├── nvim/          # Neovim 配置
 ├── opencode/      # Opencode AI 配置
 ├── pip/           # pip 配置
 ├── sheldon/       # Sheldon 插件配置
 ├── starship.toml  # Starship prompt 配置
+├── tests/         # 单元测试
 ├── uv/            # uv Python 配置
-├── wezterm/       # WezTerm 配置（子模块）
+├── wezterm/       # WezTerm 配置
 ├── yazi/          # Yazi 文件管理器配置
 ├── zed/           # Zed 编辑器配置
 ├── zellij/        # Zellij 配置
@@ -153,50 +103,11 @@ EOF
 
 ```bash
 cd ~/.config
-
-# 更新主仓库
-git pull --rebase origin main
-
-# 重跑安装脚本 (会刷新 plugins/mise tools)
-./install.sh --yes
+git pull --rebase origin main   # 更新主仓库
+./install.sh --yes              # 重跑安装 (刷新 mise tools / sheldon)
 ```
 
-## ⚠️ 注意事项
-
-### 跨设备配置
-
-以下文件包含个人敏感信息或设备特定配置，已被 `.gitignore` 忽略：
-
-| 文件 | 说明 | 处理方式 |
-|------|------|----------|
-| `gh/hosts.yml` | GitHub 认证 | 运行 `gh auth login` |
-| `zed/settings.json` | 个人 SSH 和 AI 配置 | 手动创建或修改 |
-| `opencode/opencode.json` | API 配置 | 手动创建 |
-| `zsh/.zsh_history` | Shell 历史 | 自动生成 |
-
-### 历史子模块 (已 inline)
-
-`nvim/` 与 `wezterm/` 历史上是 git submodule，现已直接 inline 进本仓库。无需 `git submodule` 命令。
-
-## 🛠️ 故障排除
-
-### 安装失败
-
-如果某个步骤失败，可以：
-
-1. 单独运行失败的步骤函数（编辑脚本注释掉其他步骤）
-2. 检查网络连接
-3. 查看错误日志
-
-### 配置不生效
-
-```bash
-# 重新加载 Zsh
-source ~/.zshrc
-
-# 或者重启终端
-exec zsh
-```
+> `nvim/` 与 `wezterm/` 已 inline（不再使用子模块），clone 无需 `--recursive`。
 
 ## 📄 许可
 

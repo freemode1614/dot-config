@@ -8,7 +8,7 @@ config.font = wezterm.font("Maple Mono NF CN")
 config.font_size = 14.0
 config.line_height = 1.2
 
-config.window_close_confirmation = "NeverPrompt"
+config.window_close_confirmation = "AlwaysPrompt"
 config.window_background_opacity = 0.8
 config.macos_window_background_blur = 20
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
@@ -34,14 +34,13 @@ config.scrollback_lines = 100000
 config.max_fps = 120
 config.animation_fps = 60
 
--- 主题设置
-config.colors = require("lua/tokyonight")
+-- 主题设置 (Catppuccin Mocha, 与 zed/nvim/yazi/lazygit 一致)
+config.colors = require("lua/catppuccin-mocha")
 
 config.window_frame = {
     font = wezterm.font({ family = "Maple Mono NF CN", weight = "Bold" }),
     font_size = 12.0,
-    active_titlebar_bg = "#131a24",
-    inactive_titlebar_bg = "#192330",
+    -- 背景色由 theme 决定 (config.colors); 仅保留字体覆盖
 }
 
 -- Leader Key (与 zellij tmux 兼容模式同键, 互不冲突)

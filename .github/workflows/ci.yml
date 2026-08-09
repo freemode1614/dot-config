@@ -47,6 +47,11 @@ jobs:
       - name: shfmt
         run: shfmt -d -i 2 -ci -bn -fn install.sh lib/*.sh
 
+      - name: unit tests
+        run: |
+          bash tests/test_bash_syntax.sh
+          bash tests/test_platform.sh
+
   install-dryrun:
     name: install dry-run (linux)
     runs-on: ubuntu-latest
