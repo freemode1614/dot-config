@@ -288,6 +288,8 @@ install_mise() {
   export MISE_SHELL=zsh
 
   if [[ -f "$CONFIG_DIR/mise/config.toml" ]]; then
+    # mise 默认不信任未签名目录, 显式信任避免每次询问
+    mise trust "$CONFIG_DIR/mise/config.toml" 2>/dev/null || true
     log_info "安装开发工具 (node, bun, pnpm, yarn, biome)..."
     (cd "$CONFIG_DIR" && mise install || true)
   fi

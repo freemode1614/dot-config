@@ -101,6 +101,14 @@ export_mirrors() {
 
   # gh CLI 二进制下载代理
   export GH_DOWNLOAD_PROXY="${GH_DOWNLOAD_PROXY:-https://ghfast.top}"
+
+  # 全局 git URL 重写: 让所有 git 操作走代理
+  # 影响: git clone / fetch / pull (sheldon, brew tap, lazygit, ...)
+  if command -v git >/dev/null 2>&1; then
+    git config --global url."${GH_DOWNLOAD_PROXY}/https://github.com/".insteadOf "https://github.com/" 2>/dev/null || true
+  fi
+
+  # Homebrew 也走 git (tap, update), 同样适用
 }
 
 # -----------------------------------------------------------------------------
