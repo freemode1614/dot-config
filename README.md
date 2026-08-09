@@ -10,9 +10,9 @@
 
 | 配置目录 | 应用名称 | 应用描述 |
 |----------|----------|----------|
-| `nvim/` | [Neovim](https://neovim.io) | 基于 LazyVim 的编辑器配置（子模块） |
+| `nvim/` | [Neovim](https://neovim.io) | 基于 LazyVim 的编辑器配置（已 inline） |
 | `zed/` | [Zed](https://zed.dev) | 下一代代码编辑器 |
-| `wezterm/` | [WezTerm](https://wezfurlong.org/wezterm) | GPU 加速终端模拟器（子模块） |
+| `wezterm/` | [WezTerm](https://wezfurlong.org/wezterm) | GPU 加速终端模拟器（已 inline） |
 | `zsh/` | [Zsh](https://www.zsh.org) | 强大的交互式 Shell |
 | `zellij/` | [Zellij](https://zellij.dev) | 终端多路复用器 |
 | `mise/` | [Mise](https://mise.jdx.dev) | 开发工具版本管理器 |
@@ -47,24 +47,57 @@
 
 ## 📦 快速开始
 
-### 克隆仓库
+### 支持平台
+
+| 平台 | 状态 | 备注 |
+|------|------|------|
+| **macOS** (Apple Silicon / Intel) | ✅ | Homebrew + `Brewfile` |
+| **Debian / Ubuntu** (x86_64 / arm64) | ✅ | apt |
+| **Fedora / RHEL / Rocky** (x86_64 / arm64) | ✅ | dnf / yum |
+| **Arch / Manjaro** | ✅ | pacman |
+| **Alpine** | ✅ | apk (musl) |
+| **openSUSE / SLE** | ✅ | zypper |
+| **WSL 1/2** | ✅ | Ubuntu/Debian 发行版默认走 apt |
+| Windows (Git Bash / MSYS) | ❌ | 请用 WSL |
+| FreeBSD / OpenBSD | ⚠️ | 部分工具不工作，欢迎 PR |
+
+### 一键安装
 
 ```bash
-# 完整克隆（包含子模块）
-git clone --recursive https://github.com/freemode1614/dot-config.git ~/.config
+# 推荐 (macOS/Linux 通用)
+curl -fsSL https://raw.githubusercontent.com/freemode1614/dot-config/main/install.sh | bash -s -- --yes
 
-# 或分开克隆
-```bash
+# 或者克隆后运行
 git clone https://github.com/freemode1614/dot-config.git ~/.config
 cd ~/.config
-git submodule update --init --recursive
+./install.sh
 ```
 
-### 更新子模块
+`install.sh` 会自动：
+
+1. 检测 OS / 架构 / 包管理器
+2. 提示确认安装 (可用 `--yes` 跳过)
+3. 安装基础工具 (git, fzf, ripgrep, fd, jq, tree, unzip, starship, eza, bat)
+4. 安装 Mise 并按 `mise/config.toml` 安装语言版本
+5. 安装 Sheldon 并应用 `sheldon/plugins.toml`
+6. 安装 Neovim / WezTerm / Zed / Zellij / Lazygit / gh / Yazi
+7. 创建幂等的配置软链 (可用 `--no-symlinks` 跳过)
+
+### macOS 推荐流程 (Brewfile)
 
 ```bash
-git submodule update --remote --merge
+brew bundle --file ~/.config/Brewfile
 ```
+
+### 更新
+
+```bash
+cd ~/.config
+git pull --rebase origin main
+./install.sh --yes
+```
+
+> 历史版本曾使用 git submodule 管理 `nvim/` 和 `wezterm/`；现已直接 inline，clone 不再需要 `--recursive`。
 
 ## 🎯 终端使用流程
 
@@ -229,12 +262,54 @@ export OPENAI_API_BASE="http://your-api-endpoint/v1"
 2. **敏感配置**：使用密码管理器或私人仓库管理
 3. **大型文件**：Neovim 和 WezTerm 作为子模块，保持独立更新
 
-## 📝 子模块说明
+## 📝 维护说明
 
-| 子模块 | 来源仓库 |
-|--------|----------|
-| `nvim` | [freemode1614/nvim](https://github.com/freemode1614/nvim) |
-| `wezterm` | [freemode1614/dot-wezterm](https://github.com/freemode1614/dot-wezterm) |
+`nvim/` 和 `wezterm/` 已 inline 进本仓库（不再使用 submodule）。如需独立的 LazyVim / WezTerm 配置，可参考：
+
+- [freemode1614/nvim](https://github.com/freemode1614/nvim)
+- [freemode1614/dot-wezterm](https://github.com/freemode1614/dot-wezterm)
+
+## 🛠️ 故障排除
+
+### Linux 上 Neovim AppImage 启动失败
+
+WSL / 容器内缺少 FUSE：
+
+```bash
+# Debian/Ubuntu
+sudo apt install fuse3 libfuse2
+
+# Fedora
+sudo dnf install fuse
+```
+
+### WezTerm 启动报错 (WSL)
+
+在 Windows 主机安装 [WezTerm for Windows](https://wezfurlong.org/wezterm/install/windows.html)，
+在 `~/.wezterm.lua` 里加：
+
+```lua
+local wsl_domains = { "Ubuntu", "Debian" }
+config.default_domain = wsl_domains[1] or "WSL:Ubuntu"
+```
+
+### gh CLI 在 WSL 报认证失败
+
+WSL 的 clock 漂移会导致 `gh auth login` 失败，先 `sudo hwclock -s` 同步硬件时钟。
+
+### starship 字符乱码
+
+确保终端字体包含 Nerd Font 字符（推荐 [CaskaydiaCove Nerd Font](https://www.nerdfonts.com/font-downloads)）。
+
+## 🩺 自检 (doctor)
+
+`install.sh` 不修改环境之前会打印 OS / arch / pkg manager。如需深度检查：
+
+```bash
+./install.sh --help          # 验证脚本本身
+bash -n install.sh           # bash 语法检查
+shellcheck install.sh lib/   # 需要安装 shellcheck
+```
 
 ## 📄 License
 

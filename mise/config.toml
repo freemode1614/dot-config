@@ -1,5 +1,13 @@
 [tools]
 biome = "2"
-bun = "latest"
+bun = "1"
 node = "24"
+pnpm = "10"
 yarn = "4"
+
+[settings]
+experimental = true
+
+[env]
+# 让 mise 管理的 node 等工具的 bin 在 PATH 前面
+MISE_NODE_FORCE_BIN = "1"

@@ -7,19 +7,30 @@
 ### 方式一：直接运行（推荐）
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/freemode1614/dot-config/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/freemode1614/dot-config/main/install.sh | bash -s -- --yes
 ```
 
 ### 方式二：克隆后运行
 
 ```bash
-# 1. 克隆仓库（包含子模块）
-git clone --recursive https://github.com/freemode1614/dot-config.git ~/.config
-
-# 2. 运行安装脚本
+git clone https://github.com/freemode1614/dot-config.git ~/.config
 cd ~/.config
 ./install.sh
 ```
+
+> 已不再使用 git submodule（`nvim/`、`wezterm/` 已 inline），clone 不需要 `--recursive`。
+
+### 支持的平台
+
+| 平台 | 包管理器 |
+|------|----------|
+| macOS (Apple Silicon / Intel) | Homebrew |
+| Debian / Ubuntu | apt |
+| Fedora / RHEL | dnf / yum |
+| Arch / Manjaro | pacman |
+| Alpine | apk |
+| openSUSE | zypper |
+| WSL | 走宿主 Linux 发行版的包管理器 |
 
 ## 📦 安装内容
 
@@ -144,10 +155,10 @@ EOF
 cd ~/.config
 
 # 更新主仓库
-git pull origin main
+git pull --rebase origin main
 
-# 更新子模块
-git submodule update --remote --merge
+# 重跑安装脚本 (会刷新 plugins/mise tools)
+./install.sh --yes
 ```
 
 ## ⚠️ 注意事项
@@ -163,12 +174,9 @@ git submodule update --remote --merge
 | `opencode/opencode.json` | API 配置 | 手动创建 |
 | `zsh/.zsh_history` | Shell 历史 | 自动生成 |
 
-### 子模块
+### 历史子模块 (已 inline)
 
-以下配置是 Git 子模块，独立维护：
-
-- `nvim/` - [freemode1614/nvim](https://github.com/freemode1614/nvim)
-- `wezterm/` - [freemode1614/dot-wezterm](https://github.com/freemode1614/dot-wezterm)
+`nvim/` 与 `wezterm/` 历史上是 git submodule，现已直接 inline 进本仓库。无需 `git submodule` 命令。
 
 ## 🛠️ 故障排除
 
