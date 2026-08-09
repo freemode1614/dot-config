@@ -30,16 +30,18 @@ detect_os() {
       ;;
     Linux)
       # WSL: /proc/sys/kernel/osrelease 含 "microsoft" 或 "WSL"
+      # 可通过 _TEST_OS_RELEASE_PATH override 单元测试
+      local osrel="${_TEST_OS_RELEASE_PATH:-/etc/os-release}"
       if [[ -r /proc/sys/kernel/osrelease ]] && \
          grep -Eqi 'microsoft|wsl' /proc/sys/kernel/osrelease 2>/dev/null; then
         printf 'wsl\n'
         return 0
       fi
 
-      # 优先读取 /etc/os-release (systemd 标准)
-      if [[ -r /etc/os-release ]]; then
-        # shellcheck disable=SC1091
-        . /etc/os-release
+      # 优先读取 os-release (systemd 标准)
+      if [[ -r "$osrel" ]]; then
+        # shellcheck disable=SC1090
+        . "$osrel"
         case "${ID:-}" in
           ubuntu|debian|linuxmint|pop|elementary|zorin) printf 'linux-debian\n'; return 0 ;;
           fedora|rhel|centos|rocky|almalinux|nobara)    printf 'linux-fedora\n'; return 0 ;;

@@ -12,6 +12,15 @@ check:
     bash -n lib/pkg.sh
     command -v shellcheck >/dev/null && shellcheck -S warning install.sh lib/*.sh || echo "shellcheck 未安装, 已跳过"
 
+# 跑单元测试
+test:
+    bash tests/test_bash_syntax.sh
+    bash tests/test_platform.sh
+
+# 跑所有 check + test
+ci: check test
+    @echo "✓ all checks passed"
+
 # macOS: 用 Brewfile 一键安装
 brew-bundle:
     brew bundle --file=Brewfile
