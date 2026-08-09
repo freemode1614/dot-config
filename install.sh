@@ -44,16 +44,23 @@ trap 'rc=$?; log_error "命令失败 (exit=$rc) 在第 ${LINENO} 行: ${BASH_COM
 # --------------------------------------------
 ASSUME_YES=0
 SKIP_SYMLINKS=0
+MIRROR_OPT=""  # "", "--force", "--off"
 for arg in "$@"; do
   case "$arg" in
     --yes|-y)        ASSUME_YES=1 ;;
     --no-symlinks)   SKIP_SYMLINKS=1 ;;
+    --china-mirror)  MIRROR_OPT="--force" ;;
+    --no-china-mirror) MIRROR_OPT="--off" ;;
+    --auto-mirror)   MIRROR_OPT="--auto" ;;
     -h|--help)
       cat <<EOF
-用法: ./install.sh [--yes] [--no-symlinks]
+用法: ./install.sh [options]
 
-  --yes          非交互 (适合 CI/SSH/curl | bash)
-  --no-symlinks  跳过 symlink 创建 (交给各 app 默认 XDG_CONFIG_HOME)
+  --yes              非交互 (适合 CI/SSH/curl | bash)
+  --no-symlinks      跳过 symlink 创建 (交给各 app 默认 XDG_CONFIG_HOME)
+  --china-mirror     强制启用国内镜像源 (适合大陆网络环境)
+  --no-china-mirror  禁用国内镜像源
+  --auto-mirror      自动检测 (默认: 按 TZ/LANG/网络连通性判断)
 EOF
       exit 0
       ;;
@@ -68,6 +75,8 @@ done
 source "$LIB_DIR/platform.sh"
 # shellcheck source=lib/pkg.sh
 source "$LIB_DIR/pkg.sh"
+# shellcheck source=lib/mirror.sh
+source "$LIB_DIR/mirror.sh" $MIRROR_OPT
 
 # --------------------------------------------
 # Phase 1: 环境检测
@@ -107,6 +116,25 @@ echo "  安装场景: $SCENARIO"
 # --------------------------------------------
 ensure_package_manager() {
   log_step "📦 准备包管理器"
+
+  # 如启用镜像, 询问是否切换系统包源
+  if [[ "${USING_CHINA_MIRROR:-0}" == "1" ]]; then
+    log_info "检测到使用国内镜像源 (USING_CHINA_MIRROR=1)"
+    local ans="n"
+    if [[ "$ASSUME_YES" -eq 1 ]]; then
+      ans="y"
+    else
+      read -r -p "是否将系统包源切换到国内镜像? [y/N] " ans < /dev/tty || ans="n"
+    fi
+    if [[ "$ans" =~ ^[Yy]$ ]]; then
+      case "$OS" in
+        linux-debian|wsl) apply_apt_mirror "${ID:-debian}" ;;
+        linux-fedora)      apply_dnf_mirror ;;
+        linux-arch)        apply_pacman_mirror ;;
+        linux-alpine)      apply_apk_mirror ;;
+      esac
+    fi
+  fi
 
   case "$OS" in
     macos)
@@ -351,6 +379,18 @@ github_release_asset() {
     | head -n 1
 }
 
+# 通过镜像代理下载 GitHub release asset
+# 用法: github_download <url> <out_file>
+github_download() {
+  local url="$1" out="$2"
+  if [[ "${USING_CHINA_MIRROR:-0}" == "1" && -n "${GH_DOWNLOAD_PROXY:-}" ]]; then
+    # ghfast.top 接受完整 URL 作为 path
+    curl -fsSL -L -o "$out" "${GH_DOWNLOAD_PROXY}/${url}"
+  else
+    curl -fsSL -L -o "$out" "$url"
+  fi
+}
+
 install_neovim_linux() {
   if command -v nvim >/dev/null 2>&1; then
     log_info "Neovim 已安装 ($(nvim --version | head -n1))"
@@ -371,7 +411,7 @@ install_neovim_linux() {
     return 1
   fi
   local tmp; tmp="$(mktemp -d)"
-  curl -fsSL -o "$tmp/nvim.tar.gz" "$url"
+  github_download "$url" "$tmp/nvim.tar.gz"
   tar -xzf "$tmp/nvim.tar.gz" -C "$tmp"
   sudo_run install -m 0755 "$tmp"/nvim-linux-*/bin/nvim /usr/local/bin/nvim
   rm -rf "$tmp"
@@ -399,7 +439,7 @@ install_wezterm_linux() {
     return 1
   fi
   local tmp; tmp="$(mktemp -d)"
-  curl -fsSL -L -o "$tmp/wezterm.AppImage" "$url"
+  github_download "$url" "$tmp/wezterm.AppImage"
   chmod +x "$tmp/wezterm.AppImage"
   sudo_run mv "$tmp/wezterm.AppImage" /usr/local/bin/wezterm
   rm -rf "$tmp"
@@ -491,7 +531,7 @@ install_lazygit_linux() {
     *) log_error "Lazygit: 不支持的架构 $ARCH"; return 1 ;;
   esac
   local tmp; tmp="$(mktemp -d)"
-  curl -fsSL -o "$tmp/lazygit.tar.gz" "$url"
+  github_download "$url" "$tmp/lazygit.tar.gz"
   tar -xzf "$tmp/lazygit.tar.gz" -C "$tmp"
   sudo_run install -m 0755 "$tmp/lazygit" /usr/local/bin/lazygit
   rm -rf "$tmp"
