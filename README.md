@@ -83,6 +83,33 @@ cd ~/.config
 6. 安装 Neovim / WezTerm / Zed / Zellij / Lazygit / gh / Yazi
 7. 创建幂等的配置软链 (可用 `--no-symlinks` 跳过)
 
+### 大陆网络环境
+
+如在国内访问 github / homebrew 慢，可启用国内镜像：
+
+```bash
+./install.sh --china-mirror --yes
+```
+
+启用后会：
+
+- `HOMEBREW_API_DOMAIN` / `HOMEBREW_BOTTLE_DOMAIN` → `mirrors.ustc.edu.cn`
+- `npm_config_registry` → `registry.npmmirror.com`
+- `PIP_INDEX_URL` → `pypi.tuna.tsinghua.edu.cn`
+- `CARGO_REGISTRIES_CRATES_IO_INDEX` → `rsproxy.cn`
+- `GOPROXY` → `goproxy.cn,direct`
+- GitHub release asset (Neovim / WezTerm / Lazygit) → `ghfast.top` 代理
+- 可选将系统包源 (apt/dnf/pacman/apk) 切换到 tuna / aliyun
+
+检测依据（任一为真即启用）：`TZ=Asia/Shanghai` 等、`LANG=zh_CN.*`、2 秒内 `github.com` 不可达。显式 flag 优先级最高。
+
+`lib/mirror.sh` 也可以单独 `source` 后让 shell 直接使用镜像变量：
+
+```bash
+source ~/.config/lib/mirror.sh --force
+brew update   # 现在走 USTC 镜像
+```
+
 ### macOS 推荐流程 (Brewfile)
 
 ```bash
