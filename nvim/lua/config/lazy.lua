@@ -15,8 +15,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.lazyvim_python_lsp = "basedpyright"
-
+-- 注: vim.g.lazyvim_python_lsp 等配置统一在 options.lua 里设置
 require("lazy").setup({
   spec = {
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },

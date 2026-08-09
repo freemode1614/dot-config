@@ -3,7 +3,7 @@
     "provider": "none"
   },
   "telemetry": {
-    "diagnostics": true,
+    "diagnostics": false,
     "metrics": false
   },
   "restore_on_startup": "launchpad",
@@ -26,17 +26,17 @@
     "enabled": true
   },
   "vim_mode": true,
-  "redact_private_values": false,
+  "redact_private_values": true,
   "icon_theme": {
     "mode": "system",
     "light": "Zed (Default)",
-    "dark": "Catppuccin Latte"
+    "dark": "Catppuccin Frappé"
   },
   "ui_font_size": 16,
   "buffer_font_size": 14.0,
   "buffer_font_family": "Maple Mono NF CN",
   "theme": {
-    "mode": "dark",
+    "mode": "system",
     "light": "Ayu Light",
     "dark": "Catppuccin Mocha"
   },

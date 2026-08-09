@@ -28,10 +28,12 @@ export PATH="$PATH:$HOME/.lmstudio/bin"
 if command -v mise &>/dev/null; then
     export PATH="$HOME/.local/share/mise/shims:$PATH"
     export MISE_SHELL=zsh
+    # 激活 mise 后, 项目级 mise.toml 才能在 cd 时自动切换工具版本
+    eval "$(mise activate zsh)"
 fi
 
-# Bun 全局包 bin
-export PATH="$HOME/.bun/bin:$PATH"
+# Bun 全局包 bin (如使用系统 bun 而非 mise 管理)
+[[ -d "$HOME/.bun/bin" ]] && export PATH="$HOME/.bun/bin:$PATH"
 
 # --------------------------------------------
 # 3. 补全系统
@@ -91,7 +93,6 @@ function yy() {
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
-alias n="nvim"
 
 alias mkdir="mkdir -pv"
 alias cp="cp -iv"
@@ -108,6 +109,8 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
+setopt HIST_EXPIRE_DUPS_FIRST   # 清理重复时优先保留早期条目
+setopt INC_APPEND_HISTORY       # 立即写入 (而不是 shell exit 时)
 setopt SHARE_HISTORY
 
 # --------------------------------------------
@@ -124,8 +127,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # --------------------------------------------
 # 11. 其他工具配置
 # --------------------------------------------
-# Bun completions (由 mise 管理)
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+# (Bun completions 由 mise shim 自动处理, 无需手动 source)
 
 # OpenCode
 export PATH="$HOME/.opencode/bin:$PATH"
