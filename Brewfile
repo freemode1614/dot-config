@@ -1,9 +1,13 @@
 # Brewfile — `brew bundle --file=Brewfile` 一键安装
 # 也可被 install.sh 调用 (`brew bundle --no-upgrade --file="$REPO/Brewfile"`)
 #
+# 注意: 字体 (cask-fonts) 不在此 — 字体是个人偏好, 不应强制安装
+#   推荐: https://github.com/subframe7536/maple-font (中文友好)
+#   安装: brew install --cask font-maple-mono-nf-cn
+#   或 nerd-fonts 任意一款 (https://www.nerdfonts.com/font-downloads)
+
 # tap
 tap "homebrew/cask"
-tap "homebrew/cask-fonts"
 
 # 命令行工具
 brew "git"
@@ -25,11 +29,6 @@ brew "lazygit"
 brew "gh"
 brew "yazi"
 brew "uv"
-
-# 字体 (Powerline/Nerd)
-cask "font-caskaydia-cove-nerd-font"
-cask "font-fira-code-nerd-font"
-cask "font-meslo-lg-nerd-font"
 
 # GUI 应用
 cask "zed"

@@ -98,7 +98,7 @@ cd ~/.config
 - `PIP_INDEX_URL` → `pypi.tuna.tsinghua.edu.cn`
 - `CARGO_REGISTRIES_CRATES_IO_INDEX` → `rsproxy.cn`
 - `GOPROXY` → `goproxy.cn,direct`
-- GitHub release asset (Neovim / WezTerm / Lazygit) → `ghfast.top` 代理
+- GitHub release asset (Neovim / WezTerm / Lazygit / Fonts / Zed) → `ghfast.top` 代理
 - 可选将系统包源 (apt/dnf/pacman/apk) 切换到 tuna / aliyun
 
 检测依据（任一为真即启用）：`TZ=Asia/Shanghai` 等、`LANG=zh_CN.*`、2 秒内 `github.com` 不可达。显式 flag 优先级最高。
@@ -108,6 +108,23 @@ cd ~/.config
 ```bash
 source ~/.config/lib/mirror.sh --force
 brew update   # 现在走 USTC 镜像
+```
+
+### brew 不可用时的兜底
+
+macOS 上 Homebrew 偶尔会出现 Ruby 兼容问题（vendored Ruby 4 + sorbet 报错）。`install.sh` 现在会探测 `brew --version` 是否能用，失败时自动走 `macos_curl_fallback()`：
+
+- Zed：从 `zed-industries/zed` release 拉 dmg → `/Applications/Zed.app`
+- WezTerm：从 `wez/wezterm` release 拉 zip → `/Applications/WezTerm.app`
+- Font：默认**不装**（个人偏好），可通过 `--with-font` 或 `INSTALL_FONT=1` 启用，默认 `MapleMono-NF-CN`（中文友好）
+
+兜底走 `ghfast.top` 代理，所以大陆网络也能装。
+
+如果 brew 长期挂掉，可以重装：
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 ### macOS 推荐流程 (Brewfile)

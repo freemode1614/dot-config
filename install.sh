@@ -45,6 +45,8 @@ trap 'rc=$?; log_error "命令失败 (exit=$rc) 在第 ${LINENO} 行: ${BASH_COM
 ASSUME_YES=0
 SKIP_SYMLINKS=0
 MIRROR_OPT=""  # "", "--force", "--off"
+INSTALL_FONT="${INSTALL_FONT:-0}"
+FONT_NAME="${FONT_NAME:-MapleMono-NF-CN}"
 for arg in "$@"; do
   case "$arg" in
     --yes|-y)        ASSUME_YES=1 ;;
@@ -52,6 +54,7 @@ for arg in "$@"; do
     --china-mirror)  MIRROR_OPT="--force" ;;
     --no-china-mirror) MIRROR_OPT="--off" ;;
     --auto-mirror)   MIRROR_OPT="--auto" ;;
+    --with-font)     INSTALL_FONT=1 ;;
     -h|--help)
       cat <<EOF
 用法: ./install.sh [options]
@@ -61,12 +64,20 @@ for arg in "$@"; do
   --china-mirror     强制启用国内镜像源 (适合大陆网络环境)
   --no-china-mirror  禁用国内镜像源
   --auto-mirror      自动检测 (默认: 按 TZ/LANG/网络连通性判断)
+  --with-font        同时安装字体 (默认 FONT_NAME=MapleMono-NF-CN,
+                      中文友好; 也可以 env FONT_NAME=CaskaydiaCove)
+
+环境变量:
+  INSTALL_FONT=1     等价于 --with-font
+  FONT_NAME=<name>   nerd-fonts 名 (如 CaskaydiaCove / JetBrainsMono)
+                     或 maple-font 名 (如 MapleMono-NF-CN)
 EOF
       exit 0
       ;;
     *) log_warn "未知参数: $arg" ;;
   esac
 done
+export INSTALL_FONT FONT_NAME
 
 # --------------------------------------------
 # 加载 lib
@@ -194,11 +205,17 @@ install_base_tools() {
         log_info "安装 Xcode Command Line Tools (可能弹 GUI)..."
         xcode-select --install || log_warn "跳过 CLT 安装"
       fi
-      if [[ -f "$CONFIG_DIR/Brewfile" ]]; then
-        log_info "应用 Brewfile..."
-        brew bundle --no-upgrade --file="$CONFIG_DIR/Brewfile"
+      # 探测 brew 是否可用 (用户机器上 Ruby 兼容问题会导致 brew 崩)
+      if command -v brew >/dev/null 2>&1 && brew --version >/dev/null 2>&1; then
+        if [[ -f "$CONFIG_DIR/Brewfile" ]]; then
+          log_info "应用 Brewfile..."
+          brew bundle --no-upgrade --file="$CONFIG_DIR/Brewfile"
+        else
+          brew install --quiet git curl wget fzf ripgrep fd jq tree unzip starship eza bat
+        fi
       else
-        brew install --quiet git curl wget fzf ripgrep fd jq tree unzip starship eza bat
+        log_warn "brew 不可用 (Ruby 兼容问题常见), 走 curl 兜底"
+        macos_curl_fallback
       fi
       ;;
     wsl)
@@ -255,10 +272,93 @@ install_eza_binary() {
   local url="https://github.com/eza-community/eza/releases/download/${ver}/${tarball}"
   local tmp
   tmp="$(mktemp -d)"
-  curl -fsSL -o "$tmp/eza.tgz" "$url"
+  github_download "$url" "$tmp/eza.tgz"
   tar -xzf "$tmp/eza.tgz" -C "$tmp"
   sudo_run install -m 0755 "$tmp"/eza /usr/local/bin/eza
   rm -rf "$tmp"
+}
+
+# macOS brew 不可用时的兜底: 直接从 GitHub release 拉 .zip/.dmg
+# 用法: macos_curl_fallback
+macos_curl_fallback() {
+  log_info "macOS brew 兜底模式 (curl 直接下载 cask)"
+
+  # ----- Font (可选, 默认不装) -----
+  # 字体是个人偏好; dotfiles 不应替你决定.
+  # 如需装, 设置 INSTALL_FONT=1 并指定 FONT_NAME (例如 MapleMono-NF-CN)
+  if [[ "${INSTALL_FONT:-0}" == "1" ]]; then
+    local FONT_NAME="${FONT_NAME:-CaskaydiaCove}"
+    # 优先级: 1) GitHub ryanoasis/nerd-fonts, 2) subframe7536/maple-font
+    local zip_url
+    if [[ "$FONT_NAME" == MapleMono* ]]; then
+      local maple_ver
+      maple_ver="$(curl -fsSL https://api.github.com/repos/subframe7536/Maple-font/releases/latest \
+                  | grep -Eo '"tag_name": "[^"]+"' | head -1 | cut -d'"' -f4)"
+      zip_url="https://github.com/subframe7536/Maple-font/releases/download/${maple_ver}/${FONT_NAME}.zip"
+    else
+      local nerd_ver
+      nerd_ver="$(curl -fsSL https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest \
+                  | grep -Eo '"tag_name": "[^"]+"' | head -1 | cut -d'"' -f4)"
+      zip_url="https://github.com/ryanoasis/nerd-fonts/releases/download/${nerd_ver}/${FONT_NAME}.zip"
+    fi
+    mkdir -p "$HOME/Library/Fonts"
+    local tmp; tmp="$(mktemp -d)"
+    if github_download "$zip_url" "$tmp/$FONT_NAME.zip"; then
+      unzip -q -o "$tmp/$FONT_NAME.zip" -d "$HOME/Library/Fonts/${FONT_NAME}-Nerd"
+      log_ok "字体已安装: $FONT_NAME (到 ~/Library/Fonts/${FONT_NAME}-Nerd)"
+    else
+      log_warn "字体下载失败: $FONT_NAME"
+    fi
+    rm -rf "$tmp"
+  else
+    log_info "字体未安装 (个人偏好, 设 INSTALL_FONT=1 FONT_NAME=MapleMono-NF-CN 可启用)"
+  fi
+
+  # ----- Zed -----
+  if [[ ! -d "/Applications/Zed.app" ]]; then
+    log_info "安装 Zed..."
+    local zed_url
+    zed_url="$(curl -fsSL https://api.github.com/repos/zed-industries/zed/releases/latest \
+              | grep -Eo '"browser_download_url": "[^"]+Zed[^"]*\.dmg"' \
+              | head -1 | sed 's/.*: "//; s/"$//')"
+    if [[ -n "$zed_url" ]]; then
+      local tmp; tmp="$(mktemp -d)"
+      if github_download "$zed_url" "$tmp/Zed.dmg"; then
+        hdiutil attach -quiet -nobrowse "$tmp/Zed.dmg"
+        cp -R "/Volumes/Zed/Zed.app" "/Applications/"
+        hdiutil detach -quiet "/Volumes/Zed"
+        log_ok "Zed 已安装到 /Applications/"
+      else
+        log_warn "Zed 下载失败"
+      fi
+      rm -rf "$tmp"
+    fi
+  else
+    log_info "Zed 已存在 (/Applications/Zed.app)"
+  fi
+
+  # ----- WezTerm -----
+  if [[ ! -d "/Applications/WezTerm.app" ]]; then
+    log_info "安装 WezTerm (从 wezterm.org)..."
+    local wt_url="https://wezfurlong.org/wezterm/wezterm-macos-$(curl -fsSL https://api.github.com/repos/wez/wezterm/releases/latest | grep -Eo '"tag_name": "[^"]+"' | head -1 | cut -d'"' -f4 | sed 's/-.*//').zip"
+    # wezterm 不直接发布 Mac zip, 改下载 nightly tarball
+    wt_url="https://github.com/wez/wezterm/releases/download/$(curl -fsSL https://api.github.com/repos/wez/wezterm/releases/latest | grep -Eo '"tag_name": "[^"]+"' | head -1 | cut -d'"' -f4)/WezTerm-macos.zip"
+    local tmp; tmp="$(mktemp -d)"
+    if github_download "$wt_url" "$tmp/wezterm.zip"; then
+      unzip -q -o "$tmp/wezterm.zip" -d "$tmp/"
+      if [[ -d "$tmp/WezTerm.app" ]]; then
+        cp -R "$tmp/WezTerm.app" "/Applications/"
+        log_ok "WezTerm 已安装到 /Applications/"
+      else
+        log_warn "WezTerm 解压后未找到 .app, 请手动处理 $tmp"
+      fi
+    else
+      log_warn "WezTerm 下载失败 (Mac 版仅通过 brew 分发, 建议 brew doctor 排查)"
+    fi
+    rm -rf "$tmp"
+  else
+    log_info "WezTerm 已存在 (/Applications/WezTerm.app)"
+  fi
 }
 
 install_eza_debian_repo() {
