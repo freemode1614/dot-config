@@ -57,11 +57,8 @@ out/
 # ============================================
 
 # 本地数据（包含个人 SSH、AI 配置）
-zed/settings.json
+zed/settings*.json
 zed/settings_backup.json
-zed/embeddings/
-zed/prompts/
-zed/themes/
 zed/embeddings/
 zed/prompts/
 zed/themes/
