@@ -291,7 +291,13 @@ install_mise() {
     # mise 默认不信任未签名目录, 显式信任避免每次询问
     mise trust "$CONFIG_DIR/mise/config.toml" 2>/dev/null || true
     log_info "安装开发工具 (node, bun, pnpm, yarn, biome)..."
-    (cd "$CONFIG_DIR" && mise install || true)
+
+    # 受限网络下 mise 从 github release 拉 pnpm/bun 可能超时,
+    # 若启用镜像且 MISE_TRUSTED_CONFIG_PATHS 已设, 仍跑; 否则不阻塞
+    if [[ "${USING_CHINA_MIRROR:-0}" == "1" ]]; then
+      log_warn "受限网络: mise install 可能下载 github release 较慢, 已设置的最佳选项: 让 pnpm=latest"
+    fi
+    (cd "$CONFIG_DIR" && mise install) || log_warn "mise install 部分失败, 可手动重跑"
   fi
 
   log_ok "Mise 安装完成"

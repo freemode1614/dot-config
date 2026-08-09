@@ -2,8 +2,10 @@
 biome = "2"
 bun = "1"
 node = "24"
-pnpm = "10"
 yarn = "4"
+# pnpm 用 latest 而非 pin, 避免每次重装时拉 github release
+# (github release 在国内受限网络下会超时)
+pnpm = "latest"
 
 [settings]
 experimental = true
