@@ -1,5 +1,15 @@
 [tools]
 biome = "2"
-bun = "latest"
+bun = "1"
 node = "24"
 yarn = "4"
+# pnpm 用 latest 而非 pin, 避免每次重装时拉 github release
+# (github release 在国内受限网络下会超时)
+pnpm = "latest"
+
+[settings]
+experimental = true
+
+[env]
+# 让 mise 管理的 node 等工具的 bin 在 PATH 前面
+MISE_NODE_FORCE_BIN = "1"

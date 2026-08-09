@@ -3,6 +3,7 @@
 # ============================================
 
 eden/
+.worktrees/
 
 # ============================================
 # 通用忽略规则
@@ -57,17 +58,13 @@ out/
 # ============================================
 
 # 本地数据（包含个人 SSH、AI 配置）
-zed/settings.json
-zed/settings_backup.json
-zed/embeddings/
-zed/prompts/
-zed/themes/
+zed/settings*.json
+!zed/settings.json.example
 zed/embeddings/
 zed/prompts/
 zed/themes/
 
 # 保留示例配置（需手动创建）
-!zed/settings.json.example
 !zed/keymap.json
 
 # ============================================
@@ -84,9 +81,15 @@ gh/hosts.yml
 # 主配置（包含 API 地址和密钥）
 opencode/opencode.json
 
-# 依赖目录
+# 依赖目录与锁文件（设备/平台差异）
 opencode/node_modules/
 opencode/bun.lock
+opencode/package-lock.json
+opencode/dcp.jsonc
+
+# 仅追踪 opencode/skills/ (技能列表)
+!opencode/skills/
+!opencode/skills-lock.json
 
 # ============================================
 # 容器工具 (Podman/Docker)
@@ -157,10 +160,13 @@ iterm2/AppSupport/
 ghostty/
 
 # ============================================
-# WezTerm（子模块）
+# WezTerm (已 inline, 非子模块)
+# =============================================
+
+# 示例配置在 README 中说明
+
 # ============================================
+# lib/ (install.sh 共享 helper, 应被追踪)
+# =============================================
 
-# WezTerm 是子模块，示例配置在 README 中说明
-
-# Podman/Docker
-containers
+!lib/

@@ -1,0 +1,62 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: lint (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: |
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew install shellcheck
+          else
+            sudo apt-get update -qq
+            sudo apt-get install -y shellcheck
+          fi
+
+      - name: Install shfmt
+        run: |
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew install shfmt
+          else
+            curl -fsSL https://webi.sh/shfmt | sh
+            echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: bash syntax
+        run: |
+          bash -n install.sh
+          bash -n lib/platform.sh
+          bash -n lib/pkg.sh
+
+      - name: shellcheck
+        run: shellcheck -S warning install.sh lib/*.sh
+
+      - name: shfmt
+        run: shfmt -d -i 2 -ci -bn -fn install.sh lib/*.sh
+
+  install-dryrun:
+    name: install dry-run (linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: show help
+        run: ./install.sh --help
+      - name: detect platform
+        run: |
+          bash -c 'source lib/platform.sh && \
+            echo "OS=$OS ARCH=$ARCH PKG_MGR=$PKG_MGR" && \
+            [[ "$OS" == linux-* || "$OS" == wsl ]] || \
+            (echo "expected linux-*/wsl on ubuntu-latest" && exit 1)'
