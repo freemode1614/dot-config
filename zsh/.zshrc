@@ -32,6 +32,9 @@ if command -v mise &>/dev/null; then
     eval "$(mise activate zsh)"
 fi
 
+# Rust 环境 (rustup 官方安装，不经 mise)
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
 # Bun 全局包 bin (如使用系统 bun 而非 mise 管理)
 [[ -d "$HOME/.bun/bin" ]] && export PATH="$HOME/.bun/bin:$PATH"
 
