@@ -48,11 +48,4 @@ return {
       fg_color = "#a6adc8",
     },
   },
-
-  -- Window frame
-  window_frame = {
-    active_titlebar_bg = "#1e1e2e",
-    inactive_titlebar_bg = "#11111b",
-    border = "#313244",
-  },
 }

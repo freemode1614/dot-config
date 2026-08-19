@@ -40,31 +40,23 @@ config.colors = require("lua/catppuccin-mocha")
 config.window_frame = {
     font = wezterm.font({ family = "Maple Mono NF CN", weight = "Bold" }),
     font_size = 12.0,
-    -- 背景色由 theme 决定 (config.colors); 仅保留字体覆盖
+    -- Catppuccin Mocha 配色 (window_frame 不属于 config.colors, 需放在这里)
+    active_titlebar_bg = "#1e1e2e",
+    inactive_titlebar_bg = "#11111b",
+    border_left_color = "#313244",
+    border_right_color = "#313244",
+    border_top_color = "#313244",
+    border_bottom_color = "#313244",
 }
 
--- Leader Key (与 zellij tmux 兼容模式同键, 互不冲突)
-config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 1000 }
-
 config.keys = {
-    -- Pane 拆分 / 导航 (在 zellij 内时由 zellij 处理; 这里只作用于 wezterm 窗格)
+    -- Ctrl+Shift 拆分 / 导航 (在 zellij 内时由 zellij 处理; 这里只作用于 wezterm 窗格)
     { key = "|", mods = "CTRL|SHIFT", action = action.SplitVertical({ domain = "CurrentPaneDomain" }) },
     { key = "_", mods = "CTRL|SHIFT", action = action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
     { key = "H", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Left") },
     { key = "J", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Down") },
     { key = "K", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Up") },
     { key = "L", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Right") },
-
-    -- Leader 快捷键 (与 README/BOOTSTRAP 文档对齐)
-    { key = "f", mods = "LEADER", action = "SwitchToWorkspace" },
-    { key = "F", mods = "LEADER", action = "RenameWorkspace", args = { "New workspace" } },
-    { key = "[", mods = "LEADER", action = "ActivateWorkspaceRelative", args = { -1 } },
-    { key = "]", mods = "LEADER", action = "ActivateWorkspaceRelative", args = {  1 } },
-    { key = "g", mods = "LEADER", action = "SpawnCommandInNewWindow", args = { "lazygit" } },
-    { key = "t", mods = "LEADER", action = "SpawnCommandInNewWindow", args = { "btop" } },
-    { key = "z", mods = "LEADER", action = "SpawnCommandInNewWindow", args = { "zellij", "attach", "main", "--create" } },
-    { key = "Z", mods = "LEADER", action = "SpawnCommandInNewWindow", args = { "zellij", "attach", "dev",  "--create" } },
-    { key = "Insert", mods = "LEADER", action = "ActivateCopyMode" },
 
     -- 字体调整 (macOS 标准)
     { key = "-", mods = "CMD", action = "DecreaseFontSize" },
@@ -142,8 +134,11 @@ end)
 
 -- 启动时自动运行 zellij, 匹配 README "打开 WezTerm 即用 Zellij" 流程
 wezterm.on("gui-startup", function(cmd)
-    -- 仅当 spawn 时直接调 zellij attach; 如已有 session 则 attach main, 没有则 --create
-    cmd:SpawnCommandInExistingWindow { args = { "zellij", "attach", "main", "--create" } }
+    -- 无显式命令时直接跑 zellij attach main (没有 session 则 --create)
+    if not cmd then
+        cmd = { args = { "zellij", "attach", "main", "--create" } }
+    end
+    wezterm.mux.spawn_window(cmd)
 end)
 
 return config
