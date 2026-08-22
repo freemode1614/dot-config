@@ -4,12 +4,16 @@
 # ============================================
 
 # --------------------------------------------
-# 1. Homebrew 环境 (macOS)
+# 1. Homebrew 环境 (macOS / Linuxbrew)
 # --------------------------------------------
 if [[ -d "/opt/homebrew/bin" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [[ -x "/usr/local/bin/brew" ]]; then
     eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -x "$HOME/.linuxbrew/bin/brew" ]]; then
+    eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+elif [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 # Homebrew 镜像 (可选，取消注释使用)

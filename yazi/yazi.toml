@@ -23,11 +23,13 @@ cache_dir = ""
 edit = [
 	{ run = 'nvim "$@"', block = true, for = "unix" },
 ]
-open = [
+ open = [
 	{ run = 'open "$@"', desc = "Open", for = "macos" },
+	{ run = 'xdg-open "$@"', desc = "Open", for = "linux" },
 ]
 reveal = [
 	{ run = 'open -R "$1"', desc = "Reveal", for = "macos" },
+	{ run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", for = "linux" },
 ]
 
 [open]

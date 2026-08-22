@@ -3,6 +3,8 @@ local action = wezterm.action
 
 local config = wezterm.config_builder and wezterm.config_builder() or {}
 
+local is_macos = string.match(wezterm.target_triple(), "apple") ~= nil
+
 -- 基础设置
 config.font = wezterm.font("Maple Mono NF CN")
 config.font_size = 14.0
@@ -10,7 +12,9 @@ config.line_height = 1.2
 
 config.window_close_confirmation = "AlwaysPrompt"
 config.window_background_opacity = 0.8
-config.macos_window_background_blur = 20
+if is_macos then
+    config.macos_window_background_blur = 20
+end
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.enable_scroll_bar = false
 -- 左右 Alt 都直通 zellij (不组合字符), 让 Alt+hjkl 在两侧都生效
@@ -58,10 +62,13 @@ config.keys = {
     { key = "K", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Up") },
     { key = "L", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Right") },
 
-    -- 字体调整 (macOS 标准)
+    -- 字体调整 (跨平台)
     { key = "-", mods = "CMD", action = "DecreaseFontSize" },
     { key = "=", mods = "CMD", action = "IncreaseFontSize" },
     { key = "0", mods = "CMD", action = "ResetFontSize" },
+    { key = "-", mods = "CTRL", action = "DecreaseFontSize" },
+    { key = "=", mods = "CTRL", action = "IncreaseFontSize" },
+    { key = "0", mods = "CTRL", action = "ResetFontSize" },
 }
 
 config.mouse_bindings = {}
