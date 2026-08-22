@@ -387,7 +387,10 @@ pane_frames false
 // 鼠标支持
 mouse_mode true
 
-// 复制命令（macOS）
+// 复制命令
+// macOS: pbcopy
+// Linux (X11): xclip -selection clipboard -in
+// Linux (Wayland): wl-copy
 copy_command "pbcopy"
 
 // 复制到系统剪贴板
