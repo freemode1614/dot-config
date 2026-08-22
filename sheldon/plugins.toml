@@ -22,5 +22,5 @@ github = "zsh-users/zsh-autosuggestions"
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
 
-# 注: zoxide 初始化在 .zshrc 中通过 'zoxide init zsh' 完成, 无需列入 sheldon
-# (zoxide 仓库无 .plugin.zsh, sheldon 加载会得到空 source)
+
+

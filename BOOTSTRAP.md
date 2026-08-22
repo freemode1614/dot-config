@@ -16,8 +16,7 @@ curl -fsSL https://raw.githubusercontent.com/freemode1614/dot-config/main/instal
 
 ### 🐚 Shell 环境
 - **Zsh** - 现代化的 Shell
-- **Sheldon** - Zsh 插件管理器
-- **Starship** - 跨 shell prompt
+- **Sheldon** - Zsh 插件管理器（含 pure prompt）
 
 ### 📝 编辑器
 - **Neovim** - 基于 LazyVim 的配置
