@@ -18,10 +18,9 @@ github = "zdharma-continuum/fast-syntax-highlighting"
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 
-# fzf  Tab 补全
+# fzf Tab 补全
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
 
-# 目录跳转 (zoxide)
-[plugins.zoxide]
-github = "zoxide/zoxide"
+# 注: zoxide 初始化在 .zshrc 中通过 'zoxide init zsh' 完成, 无需列入 sheldon
+# (zoxide 仓库无 .plugin.zsh, sheldon 加载会得到空 source)

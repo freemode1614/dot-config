@@ -1,20 +1,23 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+# Project context (shown to AI when creating artifacts)
+context: |
+  Tech stack:
+    - Languages: TypeScript (Zed/neovim default), Python 3.13 (uv-managed), Lua (neovim)
+    - Runtimes: Node 24, Bun, pnpm, Yarn 4 (managed by mise)
+    - Editors: Zed (primary), Neovim (LazyVim, secondary)
+    - Terminal: WezTerm + Zellij, Maple Mono NF CN font
+    - Formatter: Biome (JS/TS/JSON/CSS), basedpyright + ruff (Python)
+    - Versioning: mise + uv
+  Conventions:
+    - Conventional commits
+    - English-only code/comments
+    - Mirror China-friendly images when in restricted networks (ghfast.top, mirrors.ustc.edu.cn)
 
 # Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+# rules:
+#   proposal:
+#     - Keep proposals under 500 words
+#     - Always include a "Non-goals" section
+#   tasks:
+#     - Break tasks into chunks of max 2 hours

@@ -1,0 +1,31 @@
+# Lazygit 配色 (Catppuccin Mocha 调色板, 与 zed/nvim 对齐)
+# 启用: lg
+# 文档: https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+gui:
+  theme:
+    activeBorderColor:
+      - "#cba6f7"   # catppuccin mocha mauve
+      - "#f5c2e7"   # catppuccin mocha pink
+    inactiveBorderColor:
+      - "#6c7086"   # catppuccin mocha overlay0
+      - "#7f849c"   # catppuccin mocha surface2
+    optionsTextColor:
+      - "#cdd6f4"   # foreground
+    selectedLineBgColor:
+      - "#45475a"   # surface1
+  commitLength:
+    show: true
+git:
+  paging:
+    # delta 是 rust 写的语法高亮 pager; 如未安装回退到内置
+    pager: delta --paging=always || less -R
+  branchSymbols:
+    # 显示分支命名空间前缀
+    omitBranchNamespace: false
+  skipHookPrefix: "wip"
+os:
+  # 编辑器 (与 zed/nvim 一致)
+  editCommand: "nvim"
+  editCommandAtRow: "nvim +{{line}}"
+  openCommand: "open"
+  openLinkCommand: "open"

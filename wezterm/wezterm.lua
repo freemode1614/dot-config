@@ -8,13 +8,14 @@ config.font = wezterm.font("Maple Mono NF CN")
 config.font_size = 14.0
 config.line_height = 1.2
 
-config.window_close_confirmation = "NeverPrompt"
+config.window_close_confirmation = "AlwaysPrompt"
 config.window_background_opacity = 0.8
 config.macos_window_background_blur = 20
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.enable_scroll_bar = false
+-- 左右 Alt 都直通 zellij (不组合字符), 让 Alt+hjkl 在两侧都生效
 config.send_composed_key_when_left_alt_is_pressed = false
-config.send_composed_key_when_right_alt_is_pressed = true
+config.send_composed_key_when_right_alt_is_pressed = false
 
 config.window_padding = {
     left = 8,
@@ -33,23 +34,34 @@ config.scrollback_lines = 100000
 config.max_fps = 120
 config.animation_fps = 60
 
--- 主题设置
-config.colors = require("lua/tokyonight")
+-- 主题设置 (Catppuccin Mocha, 与 zed/nvim/yazi/lazygit 一致)
+config.colors = require("lua/catppuccin-mocha")
 
 config.window_frame = {
     font = wezterm.font({ family = "Maple Mono NF CN", weight = "Bold" }),
     font_size = 12.0,
-    active_titlebar_bg = "#131a24",
-    inactive_titlebar_bg = "#192330",
+    -- Catppuccin Mocha 配色 (window_frame 不属于 config.colors, 需放在这里)
+    active_titlebar_bg = "#1e1e2e",
+    inactive_titlebar_bg = "#11111b",
+    border_left_color = "#313244",
+    border_right_color = "#313244",
+    border_top_color = "#313244",
+    border_bottom_color = "#313244",
 }
 
 config.keys = {
+    -- Ctrl+Shift 拆分 / 导航 (在 zellij 内时由 zellij 处理; 这里只作用于 wezterm 窗格)
     { key = "|", mods = "CTRL|SHIFT", action = action.SplitVertical({ domain = "CurrentPaneDomain" }) },
     { key = "_", mods = "CTRL|SHIFT", action = action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
     { key = "H", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Left") },
     { key = "J", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Down") },
     { key = "K", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Up") },
     { key = "L", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Right") },
+
+    -- 字体调整 (macOS 标准)
+    { key = "-", mods = "CMD", action = "DecreaseFontSize" },
+    { key = "=", mods = "CMD", action = "IncreaseFontSize" },
+    { key = "0", mods = "CMD", action = "ResetFontSize" },
 }
 
 config.mouse_bindings = {}
@@ -118,6 +130,15 @@ end)
 wezterm.on("format-window-title", function(tab, pane, tabs, panes, config)
     local title = tab.active_pane.title
     return title
+end)
+
+-- 启动时自动运行 zellij, 匹配 README "打开 WezTerm 即用 Zellij" 流程
+wezterm.on("gui-startup", function(cmd)
+    -- 无显式命令时直接跑 zellij attach main (没有 session 则 --create)
+    if not cmd then
+        cmd = { args = { "zellij", "attach", "main", "--create" } }
+    end
+    wezterm.mux.spawn_window(cmd)
 end)
 
 return config

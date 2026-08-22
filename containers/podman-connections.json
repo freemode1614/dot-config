@@ -1,0 +1,12 @@
+{
+  "Connection": {
+    "Default": "podman-machine-default",
+    "Connections": {
+      "podman-machine-default": {
+        "URI": "ssh://core@localhost:50278/run/user/501/podman/podman.sock",
+        "Identity": "/Users/leiwenpeng/.local/share/containers/podman/machine/machine"
+      }
+    }
+  },
+  "Farm": {}
+}
