@@ -13,7 +13,7 @@ config.window_background_opacity = 0.8
 config.macos_window_background_blur = 20
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.enable_scroll_bar = false
--- 左右 Alt 都直通 zellij (不组合字符), 让 Alt+hjkl 在两侧都生效
+-- 左右 Alt 都直通 (不组合字符), 让 Alt+hjkl 在两侧都生效
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = false
 
@@ -50,7 +50,10 @@ config.window_frame = {
 }
 
 config.keys = {
-    -- Ctrl+Shift 拆分 / 导航 (在 zellij 内时由 zellij 处理; 这里只作用于 wezterm 窗格)
+    -- Leader key: Ctrl+A (激活后 1 秒内可执行后续快捷键)
+    { key = "a", mods = "CTRL", action = action.ActivateKeyTable({ name = "leader", one_shot = true, timeout_milliseconds = 1000 }) },
+
+    -- Ctrl+Shift 拆分 / 导航 (只作用于 wezterm 窗格)
     { key = "|", mods = "CTRL|SHIFT", action = action.SplitVertical({ domain = "CurrentPaneDomain" }) },
     { key = "_", mods = "CTRL|SHIFT", action = action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
     { key = "H", mods = "CTRL|SHIFT", action = action.ActivatePaneDirection("Left") },
@@ -62,6 +65,31 @@ config.keys = {
     { key = "-", mods = "CMD", action = "DecreaseFontSize" },
     { key = "=", mods = "CMD", action = "IncreaseFontSize" },
     { key = "0", mods = "CMD", action = "ResetFontSize" },
+}
+
+config.key_tables = {
+    leader = {
+        { key = "c", action = action.SpawnTab("CurrentPaneDomain") },
+        { key = "x", action = action.CloseCurrentTab({ confirm = true }) },
+        { key = "n", action = action.SpawnWindow },
+        { key = "1", action = action.ActivateTab(0) },
+        { key = "2", action = action.ActivateTab(1) },
+        { key = "3", action = action.ActivateTab(2) },
+        { key = "4", action = action.ActivateTab(3) },
+        { key = "5", action = action.ActivateTab(4) },
+        { key = "6", action = action.ActivateTab(5) },
+        { key = "7", action = action.ActivateTab(6) },
+        { key = "8", action = action.ActivateTab(7) },
+        { key = "9", action = action.ActivateTab(8) },
+        { key = "t", action = action.ShowTabNavigator },
+        { key = "w", action = action.ShowLauncher },
+
+        { key = "p", action = action.ActivatePaneDirection("Prev") },
+        { key = "LeftArrow", action = action.ActivatePaneDirection("Left") },
+        { key = "DownArrow", action = action.ActivatePaneDirection("Down") },
+        { key = "UpArrow", action = action.ActivatePaneDirection("Up") },
+        { key = "RightArrow", action = action.ActivatePaneDirection("Right") },
+    },
 }
 
 config.mouse_bindings = {}
@@ -93,6 +121,12 @@ wezterm.on("update-status", function(window, pane)
     }))
 end)
 
+local function basename(path)
+    if not path then return "" end
+    local s = tostring(path)
+    return s:match("([^/]+)$") or s
+end
+
 -- Tab 标题格式化
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
     local cwd = tab.active_pane.current_working_dir
@@ -103,17 +137,15 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
         ksh = true, csh = true, tcsh = true, ash = true, nu = true,
     }
 
-    -- 主标签：cwd 优先，cwd 拿不到时不退到 "N: zsh" 这种废 title
     local main_label
     if cwd then
-        main_label = wezterm.basename(cwd)
+        main_label = basename(cwd)
     else
         main_label = "shell"
     end
 
-    -- 正在跑命令时把命令名拼到后面
     if fp_name and not shells[fp_name] then
-        main_label = main_label .. " (" .. wezterm.basename(fp_name) .. ")"
+        main_label = main_label .. " (" .. basename(fp_name) .. ")"
     end
 
     local fixed_width = 30
@@ -130,15 +162,6 @@ end)
 wezterm.on("format-window-title", function(tab, pane, tabs, panes, config)
     local title = tab.active_pane.title
     return title
-end)
-
--- 启动时自动运行 zellij, 匹配 README "打开 WezTerm 即用 Zellij" 流程
-wezterm.on("gui-startup", function(cmd)
-    -- 无显式命令时直接跑 zellij attach main (没有 session 则 --create)
-    if not cmd then
-        cmd = { args = { "zellij", "attach", "main", "--create" } }
-    end
-    wezterm.mux.spawn_window(cmd)
 end)
 
 return config
