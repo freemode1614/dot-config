@@ -25,11 +25,20 @@ config.window_padding = {
 }
 
 config.hide_tab_bar_if_only_one_tab = false
-config.use_fancy_tab_bar = true
+config.show_tab_index_in_tab_bar = true
+config.tab_bar_at_bottom = false
+config.tab_max_width = 30
 
-config.default_cursor_style = "BlinkingBlock"
+config.default_cursor_style = "BlinkingBar"
+config.cursor_blink_rate = 800
+config.cursor_blink_ease_in = "Constant"
+config.cursor_blink_ease_out = "Constant"
 
 config.scrollback_lines = 100000
+config.enable_scroll_bar = true
+
+config.colors = require("lua/catppuccin-mocha")
+config.audible_bell = "Disabled"
 
 config.max_fps = 120
 config.animation_fps = 60
@@ -148,13 +157,23 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
         main_label = main_label .. " (" .. basename(fp_name) .. ")"
     end
 
-    local fixed_width = 30
+    local fixed_width = 24
     if #main_label > fixed_width then
         main_label = main_label:sub(1, fixed_width - 3) .. "..."
     end
 
+    local is_active = tab.is_active
+    local bg_color = is_active and "#313244" or "#11111b"
+    local fg_color = is_active and "#cdd6f4" or "#6c7086"
+
+    local tab_index = tab.tab_index + 1
+
     return {
-        { Text = " " .. main_label .. " " },
+        { Background = { Color = bg_color } },
+        { Foreground = { Color = fg_color } },
+        { Text = " " .. tab_index .. " " },
+        { Text = main_label },
+        { Text = "  " },
     }
 end)
 
