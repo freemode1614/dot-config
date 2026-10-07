@@ -79,6 +79,11 @@ gh/hosts.yml
 
 # 主配置（包含 API 地址和密钥）
 opencode/opencode.json
+opencode/cli.json
+opencode/service.json
+
+# 保留示例配置（供其他设备参考）
+!opencode/service.json.example
 
 # 依赖目录与锁文件（设备/平台差异）
 opencode/node_modules/
@@ -88,7 +93,18 @@ opencode/dcp.jsonc
 
 # 仅追踪 opencode/skills/ (技能列表)
 !opencode/skills/
-!opencode/skills-lock.json
+
+# 本地 Opencode 子配置（DCP plugin 路径）
+.opencode/opencode.json
+.opencode/tui.json
+
+# Skills CLI 创建的多 agent 目录
+.agents/
+.claude/
+.qoder/
+
+# Skills CLI 项目级 lock 文件 (设备本地)
+skills-lock.json
 
 # ============================================
 # 容器工具 (Podman/Docker)
@@ -110,6 +126,9 @@ zsh/.zsh_history
 
 # 会话文件
 zsh/.zsh_sessions/
+
+# OrbStack / 设备特定启动片段（仅本机）
+zsh/.zprofile
 
 # 自动补全缓存（自动生成）
 zsh/.zcompdump-*
