@@ -77,7 +77,7 @@ gh/hosts.yml
 # Opencode AI 助手
 # ============================================
 
-# 主配置（包含 API 地址和密钥）
+# 主配置（包含 API 地址和密钥）— opencode/opencode.json、opencode/cli.json 等已不追踪
 opencode/opencode.json
 opencode/cli.json
 opencode/service.json
@@ -89,14 +89,15 @@ opencode/service.json
 opencode/node_modules/
 opencode/bun.lock
 opencode/package-lock.json
-opencode/dcp.jsonc
 
 # 仅追踪 opencode/skills/ (技能列表)
 !opencode/skills/
 
-# 本地 Opencode 子配置（DCP plugin 路径）
+# 本地 Opencode 子配置（DCP plugin 等）— 一律不追踪
 .opencode/opencode.json
 .opencode/tui.json
+.opencode/cli.json
+.opencode/service.json
 
 # Skills CLI 创建的多 agent 目录
 .agents/
